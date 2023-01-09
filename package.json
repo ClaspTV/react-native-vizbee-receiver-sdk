@@ -1,0 +1,22 @@
+{
+  "name": "react-native-vizbee-receiver-sdk",
+  "version": "1.0.0",
+  "description": "React Native SDK for Vizbee Receiver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClaspTV/react-native-vizbee-receiver-sdk.git"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "Vizbee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ClaspTV/react-native-vizbee-receiver-sdk/issues"
+  },
+  "homepage": "https://github.com/ClaspTV/react-native-vizbee-receiver-sdk#readme"
+}
