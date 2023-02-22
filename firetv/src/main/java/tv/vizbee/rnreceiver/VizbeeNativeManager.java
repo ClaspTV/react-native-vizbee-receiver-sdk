@@ -17,6 +17,8 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import tv.vizbee.screen.api.Vizbee;
+
 
 public class VizbeeNativeManager extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
@@ -44,6 +46,25 @@ public class VizbeeNativeManager extends ReactContextBaseJavaModule implements L
     public void enableVerboseLogging() {
 
         Log.v(LOG_TAG, "Invoking enableVerboseLogging");
-        Vizbee.getInstance().enableVerboseLogging;
+         Vizbee.getInstance().enableVerboseLogging();
+    }
+
+    //----------------
+    // App & session lifecycle
+    //----------------
+
+    @Override
+    public void onHostResume() {
+        Log.v(LOG_TAG, "onHostResume");
+    }
+
+    @Override
+    public void onHostPause() {
+        Log.v(LOG_TAG, "onHostPause");
+    }
+
+    @Override
+    public void onHostDestroy() {
+        Log.v(LOG_TAG, "onHostDestroy");
     }
 }

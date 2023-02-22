@@ -1,10 +1,13 @@
 import { NativeModules } from "react-native";
 
-const VizbeeNativeManager = NativeModules.VizbeeNativeManager;
+const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
 
 class VizbeeManager {
 
-    constructor() {}
+    constructor() {
+        this.subs = {}
+        this.sub_id = 0
+    }
 
     //------------------
     // Public APIs
