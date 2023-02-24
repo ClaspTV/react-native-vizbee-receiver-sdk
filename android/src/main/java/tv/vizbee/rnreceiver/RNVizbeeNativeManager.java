@@ -49,6 +49,12 @@ public class VizbeeNativeManager extends ReactContextBaseJavaModule implements L
          Vizbee.getInstance().enableVerboseLogging();
     }
 
+    @ReactMethod
+    public void setDummyAdapter() {
+
+        DummyAdapter dummyAdapter = new DummyAdapter(this.reactContext);
+    }
+
     //----------------
     // App & session lifecycle
     //----------------
@@ -66,5 +72,15 @@ public class VizbeeNativeManager extends ReactContextBaseJavaModule implements L
     @Override
     public void onHostDestroy() {
         Log.v(LOG_TAG, "onHostDestroy");
+    }
+
+    //----------------
+    // Bridge events
+    //----------------
+
+    private void sendEvent(String eventName, @Nullable WritableMap params) {
+        getReactApplicationContext()
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit(eventName, params);
     }
 }
