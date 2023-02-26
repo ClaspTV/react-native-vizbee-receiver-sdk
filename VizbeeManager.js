@@ -29,7 +29,7 @@ class VizbeeManager {
         VizbeeNativeManager.init(appId);
 
         // set app delegate
-        AppDelegate.setAppDelegate();
+        AppDelegate.setAppDelegate(appDelegate);
     }
 
     //---

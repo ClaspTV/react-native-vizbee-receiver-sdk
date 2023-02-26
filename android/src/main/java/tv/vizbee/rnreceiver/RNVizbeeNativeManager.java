@@ -18,15 +18,16 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import tv.vizbee.screen.api.Vizbee;
+import tv.vizbee.screen.api.adapter.VizbeeAppAdapter;
 
 
-public class VizbeeNativeManager extends ReactContextBaseJavaModule implements LifecycleEventListener {
+public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
-    private static final String LOG_TAG = VizbeeNativeManager.class.getName();
+    private static final String LOG_TAG = RNVizbeeNativeManager.class.getName();
 
     private final ReactApplicationContext reactContext;
 
-    public VizbeeNativeManager(ReactApplicationContext reactContext) {
+    public RNVizbeeNativeManager(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
 
@@ -38,9 +39,9 @@ public class VizbeeNativeManager extends ReactContextBaseJavaModule implements L
         return "VizbeeNativeManager";
     }
 
-    //----------------
-    // Flow APIs
-    //----------------
+    //---
+    // Logging
+    //---
 
     @ReactMethod
     public void enableVerboseLogging() {
@@ -49,10 +50,15 @@ public class VizbeeNativeManager extends ReactContextBaseJavaModule implements L
          Vizbee.getInstance().enableVerboseLogging();
     }
 
-    @ReactMethod
-    public void setDummyAdapter() {
+    //---
+    // Init
+    //---
 
-        DummyAdapter dummyAdapter = new DummyAdapter(this.reactContext);
+    @ReactMethod
+    public void init(String appId) {
+
+        RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(this.reactContext);
+        // Vizbee.getInstance().initialize()
     }
 
     //----------------
