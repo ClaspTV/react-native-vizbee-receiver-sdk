@@ -16,15 +16,22 @@ export default class PlayerAdapter {
     //------------------
 
     setPlayerDelegate(playerDelegate) {
+
         if (playerDelegate instanceof PlayerDelegate) {
+
             this.playerDelegate = playerDelegate;
             this.setVideoStatusTimer();
+
+            VizbeeNativeManager.setPlayerAdapter(this.getVideoInfo());
         }
     }
 
     removePlayerDelegate() {
+
         this.playerDelegate = undefined;
-        // stop the timer
+        // TODO: stop the timer
+
+        VizbeeNativeManager.resetPlayerAdapter();
     }
 
     getPlayerDelegate() {

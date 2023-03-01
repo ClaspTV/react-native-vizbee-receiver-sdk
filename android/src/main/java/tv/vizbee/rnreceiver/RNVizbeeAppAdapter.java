@@ -1,27 +1,23 @@
 package tv.vizbee.rnreceiver;
 
+import static tv.vizbee.rnreceiver.RNJsonConverter.convertJsonToMap;
+
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.WritableNativeArray;
-import com.facebook.react.bridge.WritableNativeMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 import tv.vizbee.screen.api.adapter.VizbeeAppAdapter;
 import tv.vizbee.screen.api.messages.CustomEvent;
 import tv.vizbee.screen.api.messages.VideoInfo;
 import tv.vizbee.screen.api.messages.VideoTrackInfo;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * RNVizbeeAppAdapter to handle all "app" level commands
@@ -36,7 +32,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
 
     private static final String LOG_TAG = RNVizbeeAppAdapter.class.getName();
 
-    private ReactApplicationContext reactContext;
+    private final ReactApplicationContext reactContext;
 
     public RNVizbeeAppAdapter(ReactApplicationContext reactContext) {
         this.reactContext = reactContext;
@@ -48,9 +44,10 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         Log.i(LOG_TAG, "onStart");
 
         try {
-            this.reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("APP_ADAPTER_ON_START_VIDEO", getVideoInfoMap(video, position));
+            RNVizbeeEventEmitter.emitEvent(
+                    RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_START_VIDEO,
+                    getVideoInfoMap(video, position),
+                    this.reactContext);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,27 +57,32 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         super.onEvent(customEvent);
         
         Log.i(LOG_TAG, "onEvent");
+
         // sanity to make sure that customEvent is not null to avoid app crashes
         if (null == customEvent) {
             Log.w(LOG_TAG, "customEvent is null");
             return;
         }
 
-        if (customEvent.getEventType() == "tv.vizbee.homesign.signin") {
+        if (customEvent.getEventType().equalsIgnoreCase("tv.vizbee.homesign.signin")) {
 
             JSONObject eventData = customEvent.getEventData();
             if (null != eventData) {
                 JSONObject authInfo = eventData.optJSONObject("authInfo");
                 if (null != authInfo) {
-                    this.reactContext
-                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit("APP_ADAPTER_ON_SIGN_IN", authInfo);
+                    try {
+                        RNVizbeeEventEmitter.emitEvent(
+                                RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_SIGN_IN,
+                                convertJsonToMap(authInfo),
+                                this.reactContext);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
                 Log.w(LOG_TAG, "eventData is null");
             }
         }
-        
     }
 
     private WritableMap getVideoInfoMap(VideoInfo videoInfo, long position) throws JSONException {
@@ -154,76 +156,5 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         trackInfoMap.putInt("subtype", trackInfo.getSubtype());
         trackInfoMap.putMap("customData", convertJsonToMap(trackInfo.getCustomData()));
         return trackInfoMap;
-    }
-
-    private WritableMap toWritableMap(Map<String, Object> properties) {
-
-        WritableMap resultMap = Arguments.createMap();
-
-        try {
-            JSONObject json = new JSONObject(properties.toString());
-            if (json != null) {
-                resultMap = convertJsonToMap(json);
-            }
-            else {
-                Log.e(LOG_TAG, "toWritableMap error: invalid custom properties");
-            }
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, "toWritableMap error: ", e.getCause());
-        }
-
-        return resultMap;
-    }
-
-    private static WritableMap convertJsonToMap(JSONObject jsonObject) throws JSONException {
-
-        WritableMap map = new WritableNativeMap();
-
-        Iterator<String> iterator = jsonObject.keys();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            Object value = jsonObject.get(key);
-            if (value instanceof JSONObject) {
-                map.putMap(key, convertJsonToMap((JSONObject) value));
-            } else if (value instanceof JSONArray) {
-                map.putArray(key, convertJsonToArray((JSONArray) value));
-            } else if (value instanceof  Boolean) {
-                map.putBoolean(key, (Boolean) value);
-            } else if (value instanceof  Integer) {
-                map.putInt(key, (Integer) value);
-            } else if (value instanceof  Double) {
-                map.putDouble(key, (Double) value);
-            } else if (value instanceof String)  {
-                map.putString(key, (String) value);
-            } else {
-                map.putString(key, value.toString());
-            }
-        }
-        return map;
-    }
-
-    private static WritableArray convertJsonToArray(JSONArray jsonArray) throws JSONException {
-
-        WritableArray array = new WritableNativeArray();
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            Object value = jsonArray.get(i);
-            if (value instanceof JSONObject) {
-                array.pushMap(convertJsonToMap((JSONObject) value));
-            } else if (value instanceof  JSONArray) {
-                array.pushArray(convertJsonToArray((JSONArray) value));
-            } else if (value instanceof  Boolean) {
-                array.pushBoolean((Boolean) value);
-            } else if (value instanceof  Integer) {
-                array.pushInt((Integer) value);
-            } else if (value instanceof  Double) {
-                array.pushDouble((Double) value);
-            } else if (value instanceof String)  {
-                array.pushString((String) value);
-            } else {
-                array.pushString(value.toString());
-            }
-        }
-        return array;
     }
 }
