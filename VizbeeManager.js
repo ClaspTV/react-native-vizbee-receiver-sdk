@@ -1,14 +1,13 @@
 import { NativeModules } from "react-native";
-import PlayerDelegate from "./PlayerDelegate";
+import AppAdapter from "./delegates/app/AppAdapter";
+import PlayerAdapter from "./delegates/player/PlayerAdapter";
 
 const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
-const VizbeeNativeEmitter = new NativeEventEmitter(VizbeeNativeManager);
-
 class VizbeeManager {
 
     constructor() {
-        this.subs = {}
-        this.sub_id = 0
+        this.appAdapter = new AppAdapter();
+        this.playerAdapter = new PlayerAdapter();
     }
 
     //---
@@ -25,55 +24,43 @@ class VizbeeManager {
 
     init(appId, appDelegate) {
 
+        // set app delegate
+        this.setAppDelegate(appDelegate);
+
         // initialize the sdk
         VizbeeNativeManager.init(appId);
-
-        // set app delegate
-        AppDelegate.setAppDelegate(appDelegate);
     }
 
     //---
-    // Player Adapter
+    // App Delegate
+    //---
+
+    setAppDelegate(appDelegate) {
+        this.appAdapter.setAppDelegate(appDelegate);
+    }
+
+    removeAppDelegate() {
+        this.appAdapter.removeAppDelegate();
+    }
+
+    getAppDelegate() {
+        return this.appAdapter.getAppDelegate();
+    }
+
+    //---
+    // Player Delegate
     //---
 
     setPlayerDelegate(playerDelegate) {
-        PlayerDelegate.setPlayerDelegate(playerDelegate);
+        this.playerAdapter.setPlayerDelegate(playerDelegate);
     }
 
     removePlayerDelegate() {
-        PlayerDelegate.removePlayerDelegate();
-    }
-    
-    //---
-    // Update Video Status
-    //---
-
-    // PlaybackStatus?
-    setVideoStatus(videoStatus) {
-        VizbeeNativeManager.setVideoStatus(videoStatus);
+        this.playerAdapter.removePlayerDelegate();
     }
 
-    //----
-    // Listeners
-    //----
-
-    addListener(eventName, callback, context) {
-        this.subs[this.sub_id] = VizbeeNativeEmitter.addListener(eventName, function (map) {
-            callback.call(context || null, map)
-        })
-        return this.sub_id++
-    }
-
-    removeListener(subscription) {
-        let sub = this.subs[subscription]
-        if (sub != null) {
-            VizbeeNativeEmitter.removeSubscription(sub);
-        }
-        delete this.subs[subscription]
-    }
-
-    removeAllListeners(eventName) {
-        VizbeeNativeEmitter.removeAllListeners(eventName)
+    getPlayerDelegate() {
+        return this.playerAdapter.getPlayerDelegate();
     }
 }
 

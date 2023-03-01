@@ -50,7 +50,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         try {
             this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("ON_STRT_VIDEO", getVideoInfoMap(video, position));
+                .emit("APP_ADAPTER_ON_START_VIDEO", getVideoInfoMap(video, position));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
                 if (null != authInfo) {
                     this.reactContext
                     .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit("ON_SIGN_IN", authInfo);
+                    .emit("APP_ADAPTER_ON_SIGN_IN", authInfo);
                 }
             } else {
                 Log.w(LOG_TAG, "eventData is null");
