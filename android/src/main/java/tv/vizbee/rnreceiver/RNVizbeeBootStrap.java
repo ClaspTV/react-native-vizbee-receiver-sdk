@@ -1,6 +1,7 @@
 package tv.vizbee.rnreceiver;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 
@@ -15,7 +16,7 @@ public class RNVizbeeBootStrap {
     public static ReactApplicationContext reactApplicationContext;
 
     public static void init(Application application, String appId) {
-
+        Log.i("RNVizbeeBootStrap", "init Vizbee SDK with ReactApplicationContext" + reactApplicationContext);
         RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
         Vizbee.getInstance().initialize(application, appId, appAdapter);
     }

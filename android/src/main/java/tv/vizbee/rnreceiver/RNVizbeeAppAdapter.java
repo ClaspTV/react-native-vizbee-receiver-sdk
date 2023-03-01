@@ -30,7 +30,7 @@ import tv.vizbee.screen.api.messages.VideoTrackInfo;
 
 public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
 
-    private static final String LOG_TAG = RNVizbeeAppAdapter.class.getName();
+    private static final String LOG_TAG = RNVizbeeAppAdapter.class.getSimpleName();
 
     private final ReactApplicationContext reactContext;
 
@@ -47,7 +47,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
             RNVizbeeEventEmitter.emitEvent(
                     RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_START_VIDEO,
                     getVideoInfoMap(video, position),
-                    this.reactContext);
+                    RNVizbeeNativeManager.reactApplicationContext);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
 
     public void onEvent(CustomEvent customEvent) {
         super.onEvent(customEvent);
-        
+
         Log.i(LOG_TAG, "onEvent");
 
         // sanity to make sure that customEvent is not null to avoid app crashes
@@ -74,7 +74,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
                         RNVizbeeEventEmitter.emitEvent(
                                 RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_SIGN_IN,
                                 convertJsonToMap(authInfo),
-                                this.reactContext);
+                                RNVizbeeNativeManager.reactApplicationContext);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -135,7 +135,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         for (VideoTrackInfo trackInfo : tracks) {
             availableTracksInfo.pushMap(getTrackInfoMap(trackInfo));
         }
-        trackInfoMap.putArray("availableTracks", availableTracksInfo);        
+        trackInfoMap.putArray("availableTracks", availableTracksInfo);
 
         return trackInfoMap;
     }

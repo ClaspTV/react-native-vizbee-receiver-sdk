@@ -17,19 +17,19 @@ import tv.vizbee.screen.api.messages.VideoInfo;
 
 public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
-    private static final String LOG_TAG = RNVizbeeNativeManager.class.getName();
+    private static final String LOG_TAG = RNVizbeeNativeManager.class.getSimpleName();
 
-    private final ReactApplicationContext reactContext;
+    public static ReactApplicationContext reactApplicationContext = null;
 
     private RNVizbeePlayerAdapter playerAdapter;
 
     public RNVizbeeNativeManager(ReactApplicationContext reactContext) {
         super(reactContext);
 
-        Log.v(LOG_TAG, "Constructor " + reactContext);
-        this.reactContext = reactContext;
+        Log.i("RNVizbeeNativeManager", "Constructor " + reactContext);
+        reactApplicationContext = reactContext;
 
-        this.reactContext.addLifecycleEventListener(this);
+        reactApplicationContext.addLifecycleEventListener(this);
 
         // TODO: Remove this after FireTV SDK is updated with the new APIs
         RNVizbeeBootStrap.reactApplicationContext = reactContext;
@@ -48,8 +48,8 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void enableVerboseLogging() {
 
-        Log.v(LOG_TAG, "Invoking enableVerboseLogging");
-         Vizbee.getInstance().enableVerboseLogging();
+        Log.i(LOG_TAG, "Invoking enableVerboseLogging");
+        Vizbee.getInstance().enableVerboseLogging();
     }
 
     //---
@@ -59,7 +59,7 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void init(String appId) {
 
-        RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(this.reactContext);
+        RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
 
         // TODO: initialize after FireTV SDK API has been updated
         // Vizbee.getInstance().initialize()
@@ -77,7 +77,7 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
         VideoInfo videoInfo = RNVizbeeVideoInfoConverter.getVideoInfo(vizbeeVideoMap);
         Log.i(LOG_TAG, "setPlayerAdapter videoInfo" + videoInfo);
 
-        playerAdapter = new RNVizbeePlayerAdapter(this.reactContext);
+        playerAdapter = new RNVizbeePlayerAdapter(reactApplicationContext);
         Vizbee.getInstance().setPlayerAdapter(videoInfo, playerAdapter);
     }
 

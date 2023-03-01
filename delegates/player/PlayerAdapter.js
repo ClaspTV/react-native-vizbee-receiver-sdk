@@ -43,7 +43,7 @@ export default class PlayerAdapter {
     //------------------
 
     registePlayerAdapterListeners() {
-
+        global.console.log("PlayerAdapter registePlayerAdapterListeners");
         VizbeeEventEmitter.addListener(
             VizbeeEventEmitter.events.PLAYER_ADAPTER_ON_PLAYBACK_STATUS,
             this.onPlaybackStatus,
