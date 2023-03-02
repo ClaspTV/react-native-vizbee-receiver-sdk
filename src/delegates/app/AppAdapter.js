@@ -1,6 +1,6 @@
 import VizbeeEventEmitter from "../../VizbeeEventEmitter";
-import AppDelegate from "./AppDelegate";
-import VideoInfo from "../../messages/VideoInfo";
+import VizbeeAppDelegate from "./VizbeeAppDelegate";
+import VizbeeVideoInfo from "../../messages/VizbeeVideoInfo";
 
 export default class AppAdapter {
 
@@ -14,7 +14,7 @@ export default class AppAdapter {
     //------------------
 
     setAppDelegate(appDelegate) {
-        if (appDelegate instanceof AppDelegate) {
+        if (appDelegate instanceof VizbeeAppDelegate) {
             this.appDelegate = appDelegate;
         }
     }
@@ -49,7 +49,7 @@ export default class AppAdapter {
    
     onStartVideo(rnVideoInfo) {
         if (this.appDelegate && rnVideoInfo) {
-            let videoInfo = new VideoInfo().fromRNVideoInfo(rnVideoInfo);
+            let videoInfo = new VizbeeVideoInfo().fromRNVideoInfo(rnVideoInfo);
             this.appDelegate.onStartVideo(videoInfo);
         }
     }

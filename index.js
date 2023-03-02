@@ -1,9 +1,15 @@
 import VizbeeManager from './src/VizbeeManager';
-import AppDelegate from './src/delegates/app/AppDelegate';
-import PlayerDelegate from './src/delegates/player/PlayerDelegate';
+import VizbeeAppDelegate from './src/delegates/app/VizbeeAppDelegate';
+import VizbeePlayerDelegate from './src/delegates/player/VizbeePlayerDelegate';
+import VizbeePlayerState from './src/messages/VizbeePlayerState';
+import VizbeeVideoInfo from './src/messages/VizbeeVideoInfo';
+import VizbeeVideoStatus from './src/messages/VizbeeVideoStatus';
 
 module.exports = {
     VizbeeManager,
-    AppDelegate,
-    PlayerDelegate,
+    VizbeeAppDelegate,
+    VizbeePlayerDelegate,
+    VizbeePlayerState,
+    VizbeeVideoInfo,
+    VizbeeVideoStatus,
 }

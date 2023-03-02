@@ -1,11 +1,11 @@
-import PlayerState from "./PlayerState";
+import VizbeePlayerState from "./VizbeePlayerState";
 
-export default class VideoStatus {
+export default class VizbeeVideoStatus {
 
     constructor() {
 
         this._guid = "";
-        this._playbackState = PlayerState.IDLE;
+        this._playbackState = VizbeePlayerState.IDLE;
         this._isPlayingAd = false;
 
         this._currentPosition = -1;

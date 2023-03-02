@@ -1,4 +1,4 @@
-export default class PlayerState {
+export default class VizbeePlayerState {
 
     static get IDLE() { return "idle" };
     static get PREPARING() { return "preparing" };

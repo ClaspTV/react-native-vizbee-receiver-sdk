@@ -1,4 +1,4 @@
-export default class PlayerDelegate {
+export default class VizbeePlayerDelegate {
 
     constructor() {
         this.videoInfoGetter = () => {};

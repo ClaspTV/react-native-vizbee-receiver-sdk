@@ -1,8 +1,8 @@
 import { NativeModules } from "react-native";
 import VizbeeEventEmitter from "../../VizbeeEventEmitter";
-import PlayerDelegate from "./PlayerDelegate";
-import VideoInfo from "../../messages/VideoInfo";
-import VideoStatus from "../../messages/VideoStatus";
+import VizbeePlayerDelegate from "./VizbeePlayerDelegate";
+import VizbeeVideoInfo from "../../messages/VizbeeVideoInfo";
+import VizbeeVideoStatus from "../../messages/VizbeeVideoStatus";
 
 const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
 
@@ -20,7 +20,7 @@ export default class PlayerAdapter {
 
     setPlayerDelegate(playerDelegate) {
 
-        if (playerDelegate instanceof PlayerDelegate) {
+        if (playerDelegate instanceof VizbeePlayerDelegate) {
 
             this.playerDelegate = playerDelegate;
             this.startPollingVideoStatus();
@@ -88,7 +88,7 @@ export default class PlayerAdapter {
             return;
         }
         let videoInfo = this.playerDelegate.getVideoInfo();
-        if (videoInfo instanceof VideoInfo) {
+        if (videoInfo instanceof VizbeeVideoInfo) {
             return videoInfo.toRNVideoInfo();
         }
         return;
@@ -99,7 +99,7 @@ export default class PlayerAdapter {
             return;
         }
         let videoStatus = this.playerDelegate.getVideoStatus();
-        if (videoStatus instanceof VideoStatus) {
+        if (videoStatus instanceof VizbeeVideoStatus) {
             return videoStatus;
         }
         return;

@@ -1,4 +1,4 @@
-export default class AppDelegate {
+export default class VizbeeAppDelegate {
 
     constructor() {}
 

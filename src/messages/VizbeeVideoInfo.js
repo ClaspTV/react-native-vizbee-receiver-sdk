@@ -1,4 +1,4 @@
-export default class VideoInfo {
+export default class VizbeeVideoInfo {
 
     constructor() {
 
