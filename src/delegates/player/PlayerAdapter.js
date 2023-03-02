@@ -1,12 +1,15 @@
 import { NativeModules } from "react-native";
 import VizbeeEventEmitter from "../../VizbeeEventEmitter";
 import PlayerDelegate from "./PlayerDelegate";
+import VideoInfo from "../../messages/VideoInfo";
+import VideoStatus from "../../messages/VideoStatus";
 
 const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
 
 export default class PlayerAdapter {
 
     constructor() {
+        this.videoStatusPoller = undefined;
         this.playerDelegate = undefined;
         this.registePlayerAdapterListeners();
     }
@@ -20,16 +23,19 @@ export default class PlayerAdapter {
         if (playerDelegate instanceof PlayerDelegate) {
 
             this.playerDelegate = playerDelegate;
-            this.setVideoStatusTimer();
+            this.startPollingVideoStatus();
 
-            VizbeeNativeManager.setPlayerAdapter(this.getVideoInfo());
+            let videoInfo = this.getVideoInfo();
+            if (videoInfo) {
+                VizbeeNativeManager.setPlayerAdapter(videoInfo);
+            }
         }
     }
 
     removePlayerDelegate() {
 
         this.playerDelegate = undefined;
-        // TODO: stop the timer
+        this.startPollingVideoStatus();
 
         VizbeeNativeManager.resetPlayerAdapter();
     }
@@ -43,7 +49,6 @@ export default class PlayerAdapter {
     //------------------
 
     registePlayerAdapterListeners() {
-        global.console.log("PlayerAdapter registePlayerAdapterListeners");
         VizbeeEventEmitter.addListener(
             VizbeeEventEmitter.events.PLAYER_ADAPTER_ON_PLAYBACK_STATUS,
             this.onPlaybackStatus,
@@ -56,9 +61,6 @@ export default class PlayerAdapter {
     //------------------
 
     onPlaybackStatus(playbackInfo) {
-
-        global.console.log("PlayerAdapter onPlaybackStatus");
-
         if (!this.playerDelegate) {
             return;
         }
@@ -82,29 +84,44 @@ export default class PlayerAdapter {
     //------------------
 
     getVideoInfo() {
-        if (this.playerDelegate) {
-            return this.playerDelegate.getVideoInfo();
+        if (!this.playerDelegate) {
+            return;
         }
-        return undefined;
+        let videoInfo = this.playerDelegate.getVideoInfo();
+        if (videoInfo instanceof VideoInfo) {
+            return videoInfo.toRNVideoInfo();
+        }
+        return;
     }
 
     getVideoStatus() {
-        if (this.playerDelegate) {
-            return this.playerDelegate.getVideoStatus();
+        if (!this.playerDelegate) {
+            return;
         }
-        return undefined;
+        let videoStatus = this.playerDelegate.getVideoStatus();
+        if (videoStatus instanceof VideoStatus) {
+            return videoStatus;
+        }
+        return;
     }
 
     //------------------
     // Helpers
     //------------------
 
-    setVideoStatusTimer() {
-        this.videoStatusTimer = setInterval(() => {
+    startPollingVideoStatus() {
+        this.videoStatusPoller = setInterval(() => {
             const videoStatus = this.getVideoStatus();
             if (videoStatus) {
                 VizbeeNativeManager.setVideoStatus(videoStatus);
             }
         }, 1000);
+    }
+
+    stopPollingVideoStatusPoller() {
+        if (this.videoStatusPoller) {
+            clearInterval(this.videoStatusPoller);
+            this.videoStatusPoller = undefined;
+        }
     }
 }

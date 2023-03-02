@@ -6,7 +6,6 @@ const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
 class VizbeeManager {
 
     constructor() {
-        global.console.log("VizbeeManager constructor");
         this.appAdapter = new AppAdapter();
         this.playerAdapter = new PlayerAdapter();
     }

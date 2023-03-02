@@ -1,6 +1,6 @@
-import VizbeeManager from './VizbeeManager';
-import AppDelegate from './delegates/app/AppDelegate';
-import PlayerDelegate from './delegates/player/PlayerDelegate';
+import VizbeeManager from './src/VizbeeManager';
+import AppDelegate from './src/delegates/app/AppDelegate';
+import PlayerDelegate from './src/delegates/player/PlayerDelegate';
 
 module.exports = {
     VizbeeManager,

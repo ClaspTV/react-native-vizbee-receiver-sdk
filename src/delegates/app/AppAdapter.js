@@ -1,5 +1,6 @@
 import VizbeeEventEmitter from "../../VizbeeEventEmitter";
 import AppDelegate from "./AppDelegate";
+import VideoInfo from "../../messages/VideoInfo";
 
 export default class AppAdapter {
 
@@ -13,7 +14,6 @@ export default class AppAdapter {
     //------------------
 
     setAppDelegate(appDelegate) {
-        global.console.log("AppAdapter setAppDelegate");
         if (appDelegate instanceof AppDelegate) {
             this.appDelegate = appDelegate;
         }
@@ -32,9 +32,6 @@ export default class AppAdapter {
     //------------------
 
     registeAppAdapterListeners() {
-
-        global.console.log("AppAdapter registeAppAdapterListeners");
-
         // listen for start video
         VizbeeEventEmitter.addListener(
             VizbeeEventEmitter.events.APP_ADAPTER_ON_START_VIDEO,
@@ -50,15 +47,14 @@ export default class AppAdapter {
         );
     }
    
-    onStartVideo(videoInfo) {
-        global.console.log(`AppAdapter onStartVideo ${JSON.stringify(videoInfo)}` );
-        if (this.appDelegate) {
+    onStartVideo(rnVideoInfo) {
+        if (this.appDelegate && rnVideoInfo) {
+            let videoInfo = new VideoInfo().fromRNVideoInfo(rnVideoInfo);
             this.appDelegate.onStartVideo(videoInfo);
         }
     }
 
     onSignIn(signInInfo) {
-        global.console.log("AppAdapter onSignIn");
         if (this.appDelegate) {
             this.appDelegate.onSignIn(signInInfo);
         }

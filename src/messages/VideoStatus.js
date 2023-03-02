@@ -5,7 +5,8 @@ export default class VideoStatus {
     constructor() {
 
         this._guid = "";
-        this._state = PlayerState.IDLE;
+        this._playbackState = PlayerState.IDLE;
+        this._isPlayingAd = false;
 
         this._currentPosition = -1;
         this._duration = -1;
@@ -18,11 +19,18 @@ export default class VideoStatus {
         return this._guid;
     }
 
-    set state(state) {
-        this._state = state;
+    set playbackState(playbackState) {
+        this._playbackState = playbackState;
     }
-    get state() {
-        return this._state;
+    get playbackState() {
+        return this._playbackState;
+    }
+
+    set isPlayingAd(isPlayingAd) {
+        this._isPlayingAd = isPlayingAd;
+    }
+    get isPlayingAd() {
+        return this._isPlayingAd;
     }
 
     set currentPosition(positionInMillisecs) {
