@@ -1,6 +1,6 @@
 {
   "name": "react-native-vizbee-receiver-sdk",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "React Native SDK for Vizbee Receiver",
   "main": "index.js",
   "scripts": {

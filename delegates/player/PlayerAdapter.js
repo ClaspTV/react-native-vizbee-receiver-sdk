@@ -57,6 +57,8 @@ export default class PlayerAdapter {
 
     onPlaybackStatus(playbackInfo) {
 
+        global.console.log("PlayerAdapter onPlaybackStatus");
+
         if (!this.playerDelegate) {
             return;
         }
