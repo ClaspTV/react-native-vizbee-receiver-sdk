@@ -20,6 +20,8 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
 
     public static ReactApplicationContext reactApplicationContext = null;
 
+    public static Application application = null;
+
     private RNVizbeePlayerAdapter playerAdapter;
 
     public RNVizbeeNativeManager(ReactApplicationContext reactContext) {
@@ -29,9 +31,6 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
         reactApplicationContext = reactContext;
 
         reactApplicationContext.addLifecycleEventListener(this);
-
-        // TODO: Remove this after FireTV SDK is updated with the new APIs
-        RNVizbeeBootStrap.reactApplicationContext = reactContext;
     }
 
     @NonNull
@@ -58,10 +57,12 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void init(String appId) {
 
-        RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
+        enableVerboseLogging();
 
-        // TODO: initialize after FireTV SDK API has been updated
-        // Vizbee.getInstance().initialize()
+        // TODO: initialize without `application` instance after FireTV SDK API has been updated
+        Logger.i(LOG_TAG, "Initializing Vizbee SDK with appId " + appId);
+        RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
+        Vizbee.getInstance().initialize(application, appId, appAdapter);
     }
 
     //---
