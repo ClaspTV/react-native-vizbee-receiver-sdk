@@ -1,11 +1,11 @@
 package tv.vizbee.rnreceiver;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 
 import tv.vizbee.screen.api.Vizbee;
+import tv.vizbee.utils.Logger;
 
 // NOTE: This class is only used for demo purpose
 // until FireTV SDK is updated with the new APIs
@@ -16,7 +16,7 @@ public class RNVizbeeBootStrap {
     public static ReactApplicationContext reactApplicationContext;
 
     public static void init(Application application, String appId) {
-        Log.i("RNVizbeeBootStrap", "init Vizbee SDK with ReactApplicationContext" + reactApplicationContext);
+        Logger.i("RNVizbeeBootStrap", "init Vizbee SDK with ReactApplicationContext" + reactApplicationContext);
         RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
         Vizbee.getInstance().initialize(application, appId, appAdapter);
     }

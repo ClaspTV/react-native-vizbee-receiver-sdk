@@ -1,7 +1,6 @@
 package tv.vizbee.rnreceiver;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -13,7 +12,7 @@ import com.facebook.react.bridge.ReadableMap;
 
 import tv.vizbee.screen.api.Vizbee;
 import tv.vizbee.screen.api.messages.VideoInfo;
-
+import tv.vizbee.utils.Logger;
 
 public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
@@ -26,7 +25,7 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     public RNVizbeeNativeManager(ReactApplicationContext reactContext) {
         super(reactContext);
 
-        Log.i("RNVizbeeNativeManager", "Constructor " + reactContext);
+        Logger.i("RNVizbeeNativeManager", "Constructor " + reactContext);
         reactApplicationContext = reactContext;
 
         reactApplicationContext.addLifecycleEventListener(this);
@@ -48,7 +47,7 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void enableVerboseLogging() {
 
-        Log.i(LOG_TAG, "Invoking enableVerboseLogging");
+        Logger.i(LOG_TAG, "Invoking enableVerboseLogging");
         Vizbee.getInstance().enableVerboseLogging();
     }
 
@@ -72,10 +71,10 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void setPlayerAdapter(ReadableMap vizbeeVideoMap) {
 
-        Log.i(LOG_TAG, "setPlayerAdapter");
+        Logger.i(LOG_TAG, "setPlayerAdapter");
 
         VideoInfo videoInfo = RNVizbeeVideoInfoConverter.getVideoInfo(vizbeeVideoMap);
-        Log.i(LOG_TAG, "setPlayerAdapter videoInfo" + videoInfo);
+        Logger.i(LOG_TAG, "setPlayerAdapter videoInfo" + videoInfo);
 
         playerAdapter = new RNVizbeePlayerAdapter(reactApplicationContext);
         Vizbee.getInstance().setPlayerAdapter(videoInfo, playerAdapter);
@@ -84,7 +83,7 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void resetPlayerAdapter() {
 
-        Log.i(LOG_TAG, "resetPlayerAdapter");
+        Logger.i(LOG_TAG, "resetPlayerAdapter");
         Vizbee.getInstance().resetPlayerAdapter();
     }
 
@@ -103,16 +102,16 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
 
     @Override
     public void onHostResume() {
-        Log.v(LOG_TAG, "onHostResume");
+        Logger.v(LOG_TAG, "onHostResume");
     }
 
     @Override
     public void onHostPause() {
-        Log.v(LOG_TAG, "onHostPause");
+        Logger.v(LOG_TAG, "onHostPause");
     }
 
     @Override
     public void onHostDestroy() {
-        Log.v(LOG_TAG, "onHostDestroy");
+        Logger.v(LOG_TAG, "onHostDestroy");
     }
 }

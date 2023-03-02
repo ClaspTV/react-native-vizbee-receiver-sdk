@@ -1,10 +1,9 @@
 package tv.vizbee.rnreceiver;
 
-import android.util.Log;
-
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import tv.vizbee.utils.Logger;
 
 /**
  * RNVizbeeEventEmitter to emit the events to JS.
@@ -12,7 +11,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class RNVizbeeEventEmitter {
 
-    private static final String LOG_TAG = RNVizbeeEventEmitter.class.getName();
+    private static final String LOG_TAG = RNVizbeeEventEmitter.class.getSimpleName();
 
     public enum Event {
         APP_ADAPTER_ON_START_VIDEO,
@@ -22,7 +21,7 @@ public class RNVizbeeEventEmitter {
 
     public static void emitEvent(Event eventName, WritableMap params, ReactApplicationContext reactContext) {
 
-        Log.i(LOG_TAG, "Emitting event " + eventName + "'with params " + params);
+        Logger.i(LOG_TAG, "Emitting event " + eventName + "'with params " + params);
 
         reactContext
         .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)

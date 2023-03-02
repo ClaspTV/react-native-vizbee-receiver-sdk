@@ -30,7 +30,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
     @Override
     public void play() {
 
-        Logger.v(LOG_TAG, "PLAY");
+        Logger.i(LOG_TAG, "PLAY");
 
         WritableMap playbackStatus = Arguments.createMap();
         playbackStatus.putString("playbackState", "play");
@@ -43,7 +43,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
     @Override
     public void pause() {
 
-        Logger.v(LOG_TAG, "PAUSE");
+        Logger.i(LOG_TAG, "PAUSE");
 
         WritableMap playbackStatus = Arguments.createMap();
         playbackStatus.putString("playbackState", "pause");
@@ -56,7 +56,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
     @Override
     public void seek(int position) {
 
-        Logger.v(LOG_TAG, "SEEK " + position);
+        Logger.i(LOG_TAG, "SEEK " + position);
 
         WritableMap playbackStatus = Arguments.createMap();
         playbackStatus.putString("playbackState", "seek");
@@ -70,7 +70,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
     @Override
     public void stop(int reason) {
 
-        Logger.v(LOG_TAG, "STOP");
+        Logger.i(LOG_TAG, "STOP");
 
         WritableMap playbackStatus = Arguments.createMap();
         playbackStatus.putString("playbackState", "stop");
@@ -85,7 +85,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
     @Override
     public VideoStatus getVideoStatus() {
 
-        Logger.v(LOG_TAG, "VIDEO_STATUS");
+        Logger.i(LOG_TAG, "VIDEO_STATUS");
 
         VideoStatus videoStatus = new VideoStatus();
         videoStatus.mPlaybackStatus = PlaybackStatus.UNKNOWN;
@@ -163,7 +163,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
     @Override
     public AdStatus getAdStatus() {
 
-        Logger.v(LOG_TAG, "AD_STATUS");
+        Logger.i(LOG_TAG, "AD_STATUS");
         
         if (null != videoStatusMap) {
 

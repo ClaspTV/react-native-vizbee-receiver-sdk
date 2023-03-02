@@ -2,8 +2,6 @@ package tv.vizbee.rnreceiver;
 
 import static tv.vizbee.rnreceiver.RNJsonConverter.convertJsonToMap;
 
-import android.util.Log;
-
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableArray;
@@ -18,6 +16,7 @@ import tv.vizbee.screen.api.adapter.VizbeeAppAdapter;
 import tv.vizbee.screen.api.messages.CustomEvent;
 import tv.vizbee.screen.api.messages.VideoInfo;
 import tv.vizbee.screen.api.messages.VideoTrackInfo;
+import tv.vizbee.utils.Logger;
 
 /**
  * RNVizbeeAppAdapter to handle all "app" level commands
@@ -41,7 +40,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
     public void onStart(VideoInfo video, long position) {
         super.onStart(video, position);
 
-        Log.i(LOG_TAG, "onStart");
+        Logger.i(LOG_TAG, "onStart");
 
         try {
             RNVizbeeEventEmitter.emitEvent(
@@ -56,11 +55,11 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
     public void onEvent(CustomEvent customEvent) {
         super.onEvent(customEvent);
 
-        Log.i(LOG_TAG, "onEvent");
+        Logger.i(LOG_TAG, "onEvent");
 
         // sanity to make sure that customEvent is not null to avoid app crashes
         if (null == customEvent) {
-            Log.w(LOG_TAG, "customEvent is null");
+            Logger.w(LOG_TAG, "customEvent is null");
             return;
         }
 
@@ -80,7 +79,7 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
                     }
                 }
             } else {
-                Log.w(LOG_TAG, "eventData is null");
+                Logger.w(LOG_TAG, "eventData is null");
             }
         }
     }
