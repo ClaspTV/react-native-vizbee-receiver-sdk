@@ -49,7 +49,8 @@ export default class AppAdapter {
    
     onStartVideo(rnVideoInfo) {
         if (this.appDelegate && rnVideoInfo) {
-            let videoInfo = new VizbeeVideoInfo().fromRNVideoInfo(rnVideoInfo);
+            let videoInfo = new VizbeeVideoInfo();
+            videoInfo.fromRNVideoInfo(rnVideoInfo);
             this.appDelegate.onStartVideo(videoInfo);
         }
     }
