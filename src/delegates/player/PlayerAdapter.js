@@ -9,6 +9,7 @@ const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
 export default class PlayerAdapter {
 
     constructor() {
+        this.currentVideoGuid = undefined;
         this.videoStatusPoller = undefined;
         this.playerDelegate = undefined;
         this.registePlayerAdapterListeners();
@@ -19,23 +20,18 @@ export default class PlayerAdapter {
     //------------------
 
     setPlayerDelegate(playerDelegate) {
-
         if (playerDelegate instanceof VizbeePlayerDelegate) {
-
+            if (this.getPlayerDelegate()) {
+                this.removePlayerDelegate();
+            }
             this.playerDelegate = playerDelegate;
             this.startPollingVideoStatus();
-
-            let videoInfo = this.getVideoInfo();
-            if (videoInfo) {
-                VizbeeNativeManager.setPlayerAdapter(videoInfo);
-            }
         }
     }
 
     removePlayerDelegate() {
-
         this.playerDelegate = undefined;
-        this.startPollingVideoStatus();
+        this.stopPollingVideoStatus();
 
         VizbeeNativeManager.resetPlayerAdapter();
     }
@@ -109,16 +105,25 @@ export default class PlayerAdapter {
     // Helpers
     //------------------
 
+    setNativePlayerAdapterWithVideoInfo() {
+        let videoInfo = this.getVideoInfo();
+        if (videoInfo && this.currentVideoGuid != videoInfo.guid) {
+            this.currentVideoGuid = videoInfo.guid;
+            VizbeeNativeManager.setPlayerAdapter(videoInfo);
+        }
+    }
+
     startPollingVideoStatus() {
         this.videoStatusPoller = setInterval(() => {
+            this.setNativePlayerAdapterWithVideoInfo();
             const videoStatus = this.getVideoStatus();
             if (videoStatus) {
-                VizbeeNativeManager.setVideoStatus(videoStatus);
+                VizbeeNativeManager.setVideoStatus(videoStatus.toJSON());
             }
         }, 1000);
     }
 
-    stopPollingVideoStatusPoller() {
+    stopPollingVideoStatus() {
         if (this.videoStatusPoller) {
             clearInterval(this.videoStatusPoller);
             this.videoStatusPoller = undefined;

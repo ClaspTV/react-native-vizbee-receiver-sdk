@@ -15,6 +15,9 @@ export default class AppAdapter {
 
     setAppDelegate(appDelegate) {
         if (appDelegate instanceof VizbeeAppDelegate) {
+            if (this.getAppDelegate()) {
+                this.removeAppDelegate();
+            }
             this.appDelegate = appDelegate;
         }
     }

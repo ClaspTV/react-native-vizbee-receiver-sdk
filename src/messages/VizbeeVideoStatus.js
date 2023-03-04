@@ -46,4 +46,14 @@ export default class VizbeeVideoStatus {
     get duration() {
         return this._duration;
     }
+
+    toJSON() {
+        return {
+            guid: this.guid,
+            playbackState: this.playbackState,
+            isPlayingAd: this.isPlayingAd,
+            currentPosition: this.currentPosition,
+            duration: this.duration
+        };
+    }
 }
