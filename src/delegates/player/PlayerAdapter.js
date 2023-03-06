@@ -32,6 +32,7 @@ export default class PlayerAdapter {
     removePlayerDelegate() {
         this.playerDelegate = undefined;
         this.stopPollingVideoStatus();
+        this.currentVideoGuid = undefined;
 
         VizbeeNativeManager.resetPlayerAdapter();
     }
