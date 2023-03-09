@@ -94,7 +94,9 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
 
     @ReactMethod
     public void setVideoStatus(ReadableMap videoStatusMap) {
-        playerAdapter.setVideoStatus(videoStatusMap);
+        if  (null != playerAdapter) {
+            playerAdapter.setVideoStatus(videoStatusMap);
+        }
     }
 
     //---

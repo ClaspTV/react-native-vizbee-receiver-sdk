@@ -17,29 +17,7 @@ export default class VizbeePlayerDelegate {
         return this.videoInfoGetter();
     }
 
-    setVideoInfoGetter(videoInfoGetter) {
-        if (typeof videoInfoGetter !== "function") {
-            return;
-        }
-        this.videoInfoGetter = videoInfoGetter;
-    }
-
-    getVideoInfoGetter() {
-        return this.videoInfoGetter;
-    }
-
     getVideoStatus() {
         return this.videoStatusGetter();
-    }
-
-    setVideoStatusGetter(videoStatusGetter) {
-        if (typeof videoStatusGetter !== "function") {
-            return;
-        }
-        this.videoStatusGetter = videoStatusGetter;
-    }
-
-    getVideoStatusGetter() {
-        return this.videoStatusGetter;
     }
 }
