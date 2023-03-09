@@ -183,6 +183,13 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
             }
         }
 
-        return null;
+        // ads end
+        if (!isPlayingContent) {
+            if (null != this.getAdStatusListener()) {
+                this.getAdStatusListener().onAdCompleted();
+            }
+        }
+
+        return super.getAdStatus;
     }
 }
