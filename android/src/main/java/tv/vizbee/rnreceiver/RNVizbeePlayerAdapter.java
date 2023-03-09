@@ -190,6 +190,6 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
             }
         }
 
-        return super.getAdStatus;
+        return super.getAdStatus();
     }
 }
