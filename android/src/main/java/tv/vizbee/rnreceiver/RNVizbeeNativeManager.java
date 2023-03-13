@@ -1,7 +1,5 @@
 package tv.vizbee.rnreceiver;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -19,8 +17,6 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     private static final String LOG_TAG = RNVizbeeNativeManager.class.getSimpleName();
 
     public static ReactApplicationContext reactApplicationContext = null;
-
-    public static Application application = null;
 
     private RNVizbeePlayerAdapter playerAdapter;
 
@@ -62,7 +58,7 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
         // TODO: initialize without `application` instance after FireTV SDK API has been updated
         Logger.i(LOG_TAG, "Initializing Vizbee SDK with appId " + appId);
         RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
-        Vizbee.getInstance().initialize(application, appId, appAdapter);
+        Vizbee.getInstance().initialize(appId, appAdapter);
     }
 
     //---
