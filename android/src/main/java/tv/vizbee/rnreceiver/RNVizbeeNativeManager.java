@@ -9,6 +9,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 
 import tv.vizbee.screen.api.Vizbee;
+import tv.vizbee.screen.api.VizbeeOptions;
 import tv.vizbee.screen.api.messages.VideoInfo;
 import tv.vizbee.utils.Logger;
 
@@ -58,7 +59,8 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
         // TODO: initialize without `application` instance after FireTV SDK API has been updated
         Logger.i(LOG_TAG, "Initializing Vizbee SDK with appId " + appId);
         RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
-        Vizbee.getInstance().initialize(appId, appAdapter);
+        VizbeeOptions options = new VizbeeOptions();
+        Vizbee.getInstance().initialize(appId, appAdapter, options);
     }
 
     //---
