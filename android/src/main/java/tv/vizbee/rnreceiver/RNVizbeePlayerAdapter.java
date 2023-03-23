@@ -54,7 +54,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
     }
 
     @Override
-    public void seek(int position) {
+    public void seek(long position) {
 
         Logger.i(LOG_TAG, "SEEK " + position);
 
