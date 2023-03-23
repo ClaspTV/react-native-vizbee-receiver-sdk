@@ -1,10 +1,5 @@
 export default class VizbeePlayerDelegate {
 
-    constructor() {
-        this.videoInfoGetter = () => {};
-        this.videoStatusGetter = () => {};
-    }
-
     onPlay() {}
 
     onPause() {}
@@ -13,11 +8,7 @@ export default class VizbeePlayerDelegate {
 
     onStop(stopReason) {}
 
-    getVideoInfo() {
-        return this.videoInfoGetter();
-    }
+    getVideoInfo() {}
 
-    getVideoStatus() {
-        return this.videoStatusGetter();
-    }
+    getVideoStatus() {}
 }
