@@ -30,6 +30,7 @@ export default class PlayerAdapter {
     }
 
     removePlayerDelegate() {
+        this.currentVideoGuid = undefined;
         this.playerDelegate = undefined;
         this.stopPollingVideoStatus();
 
