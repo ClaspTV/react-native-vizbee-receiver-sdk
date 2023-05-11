@@ -34,6 +34,9 @@ export default class VizbeeVideoStatus {
     }
 
     set currentPosition(positionInMillisecs) {
+        if (positionInMillisecs === Infinity) {
+            positionInMillisecs = -1;
+        }
         this._currentPosition = positionInMillisecs;
     }
     get currentPosition() {
@@ -41,6 +44,9 @@ export default class VizbeeVideoStatus {
     }
 
     set duration(durationInMillisecs) {
+        if (durationInMillisecs === Infinity) {
+            durationInMillisecs = -1;
+        }
         this._duration = durationInMillisecs;
     }
     get duration() {
