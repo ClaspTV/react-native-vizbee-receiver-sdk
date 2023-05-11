@@ -54,8 +54,6 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void init(String appId) {
 
-        enableVerboseLogging();
-
         // TODO: initialize without `application` instance after FireTV SDK API has been updated
         Logger.i(LOG_TAG, "Initializing Vizbee SDK with appId " + appId);
         RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
