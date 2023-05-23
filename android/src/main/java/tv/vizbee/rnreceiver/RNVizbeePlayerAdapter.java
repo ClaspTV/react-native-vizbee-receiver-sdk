@@ -35,7 +35,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
         WritableMap playbackStatus = Arguments.createMap();
         playbackStatus.putString("playbackState", "play");
         RNVizbeeEventEmitter.emitEvent(
-                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_ON_PLAYBACK_STATUS,
+                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_COMMAND,
                 playbackStatus,
                 this.reactContext);
     }
@@ -48,7 +48,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
         WritableMap playbackStatus = Arguments.createMap();
         playbackStatus.putString("playbackState", "pause");
         RNVizbeeEventEmitter.emitEvent(
-                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_ON_PLAYBACK_STATUS,
+                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_COMMAND,
                 playbackStatus,
                 this.reactContext);
     }
@@ -62,7 +62,7 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
         playbackStatus.putString("playbackState", "seek");
         playbackStatus.putDouble("seekPos", position);
         RNVizbeeEventEmitter.emitEvent(
-                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_ON_PLAYBACK_STATUS,
+                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_COMMAND,
                 playbackStatus,
                 this.reactContext);
     }
@@ -75,9 +75,17 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
         WritableMap playbackStatus = Arguments.createMap();
         playbackStatus.putString("playbackState", "stop");
         RNVizbeeEventEmitter.emitEvent(
-                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_ON_PLAYBACK_STATUS,
+                RNVizbeeEventEmitter.Event.PLAYER_ADAPTER_COMMAND,
                 playbackStatus,
                 this.reactContext);
+    }
+
+    @Override
+    public void onSelectActiveTrackInfo(VideoTrackInfo activeTrackInfo) {
+        super.onSelectActiveTrackInfo(activeTrackInfo)
+
+        Logger.i(LOG_TAG, "onSelectActiveTrackInfo $activeTrackInfo")
+        
     }
 
     private boolean isPlayingContent = true;
@@ -191,5 +199,20 @@ public class RNVizbeePlayerAdapter extends VizbeePlayerAdapter {
         }
 
         return super.getAdStatus();
+    }
+
+    @Override
+    public VideoTrackInfo getActiveTrackInfo() {
+
+        Log.v(LOG_TAG, "getActiveTrackInfo isClosedCaptioning = ${playerListener.isClosedCaptioning()}")
+        return if (!playerListener.isClosedCaptioning()) {
+            null
+        } else {
+            VideoTrackInfo.Builder(1, VideoTrackInfo.TYPE_TEXT)
+                .setLanguage("en")
+                .setContentId("contentId")
+                .setContentType("contentType")
+                .build()
+        }
     }
 }

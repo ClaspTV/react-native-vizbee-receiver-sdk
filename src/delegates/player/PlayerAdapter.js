@@ -47,8 +47,8 @@ export default class PlayerAdapter {
 
     registePlayerAdapterListeners() {
         VizbeeEventEmitter.addListener(
-            VizbeeEventEmitter.events.PLAYER_ADAPTER_ON_PLAYBACK_STATUS,
-            this.onPlaybackStatus,
+            VizbeeEventEmitter.events.PLAYER_ADAPTER_COMMAND,
+            this.onPlayerAdapterCommand,
             this
         );
     }
@@ -57,7 +57,7 @@ export default class PlayerAdapter {
     // Commands
     //------------------
 
-    onPlaybackStatus(playbackInfo) {
+    onPlayerAdapterCommand(playbackInfo) {
         if (!this.playerDelegate) {
             return;
         }
