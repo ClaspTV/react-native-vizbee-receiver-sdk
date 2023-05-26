@@ -37,6 +37,28 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         this.reactContext = reactContext;
     }
 
+    public void onConnected() {
+        Logger.i(LOG_TAG, "onConnected");
+        
+        WritableMap connectionState = Arguments.createMap();
+            connectionState.putString("connectionState", "connected");
+            RNVizbeeEventEmitter.emitEvent(
+                RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_CONNECTED,
+                connectionState,
+                RNVizbeeNativeManager.reactApplicationContext);
+    }
+
+    public void onDisconnected() {
+        Logger.i(LOG_TAG, "onDisconnected");
+
+        WritableMap connectionState = Arguments.createMap();
+        connectionState.putString("connectionState", "disconnected");
+        RNVizbeeEventEmitter.emitEvent(
+            RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_DISCONNECTED,
+            connectionState,
+            RNVizbeeNativeManager.reactApplicationContext);
+    }
+
     public void onStart(VideoInfo video, long position) {
         super.onStart(video, position);
 

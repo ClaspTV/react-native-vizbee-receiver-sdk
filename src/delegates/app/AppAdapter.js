@@ -35,6 +35,20 @@ export default class AppAdapter {
     //------------------
 
     registeAppAdapterListeners() {
+        // listen for connected
+        VizbeeEventEmitter.addListener(
+            VizbeeEventEmitter.events.APP_ADAPTER_ON_CONNECTED,
+            this.onConnected,
+            this
+        );
+
+        // listen for disconnected
+        VizbeeEventEmitter.addListener(
+            VizbeeEventEmitter.events.APP_ADAPTER_ON_DISCONNECTED,
+            this.onDisconnected,
+            this
+        );
+
         // listen for start video
         VizbeeEventEmitter.addListener(
             VizbeeEventEmitter.events.APP_ADAPTER_ON_START_VIDEO,
@@ -50,6 +64,18 @@ export default class AppAdapter {
         );
     }
    
+    onConnected() {
+        if (this.appDelegate) {
+            this.appDelegate.onConnected();
+        }
+    }
+
+    onDisconnected() {
+        if (this.appDelegate) {
+            this.appDelegate.onDisconnected();
+        }
+    }
+
     onStartVideo(rnVideoInfo) {
         if (this.appDelegate && rnVideoInfo) {
             let videoInfo = new VizbeeVideoInfo();

@@ -14,6 +14,8 @@ public class RNVizbeeEventEmitter {
     private static final String LOG_TAG = RNVizbeeEventEmitter.class.getSimpleName();
 
     public enum Event {
+        APP_ADAPTER_ON_CONNECTED,
+        APP_ADAPTER_ON_DISCONNECTED,
         APP_ADAPTER_ON_START_VIDEO,
         APP_ADAPTER_ON_SIGN_IN,
         PLAYER_ADAPTER_ON_PLAYBACK_STATUS;
