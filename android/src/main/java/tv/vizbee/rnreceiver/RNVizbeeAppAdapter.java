@@ -37,24 +37,24 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         this.reactContext = reactContext;
     }
 
-    public void onConnected() {
+    public void onSendersActive() {
         Logger.i(LOG_TAG, "onConnected");
         
         WritableMap connectionState = Arguments.createMap();
-            connectionState.putString("connectionState", "connected");
+            connectionState.putString("sendersActiveState", "ative");
             RNVizbeeEventEmitter.emitEvent(
-                RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_CONNECTED,
+                RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_SENDERS_ACTIVE,
                 connectionState,
                 RNVizbeeNativeManager.reactApplicationContext);
     }
 
-    public void onDisconnected() {
+    public void onSendersInactive() {
         Logger.i(LOG_TAG, "onDisconnected");
 
         WritableMap connectionState = Arguments.createMap();
-        connectionState.putString("connectionState", "disconnected");
+        connectionState.putString("sendersActiveState", "inactive");
         RNVizbeeEventEmitter.emitEvent(
-            RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_DISCONNECTED,
+            RNVizbeeEventEmitter.Event.APP_ADAPTER_ON_SENDERS_INACTIVE,
             connectionState,
             RNVizbeeNativeManager.reactApplicationContext);
     }

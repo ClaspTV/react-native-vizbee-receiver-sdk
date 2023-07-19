@@ -37,14 +37,14 @@ export default class AppAdapter {
     registeAppAdapterListeners() {
         // listen for connected
         VizbeeEventEmitter.addListener(
-            VizbeeEventEmitter.events.APP_ADAPTER_ON_CONNECTED,
+            VizbeeEventEmitter.events.APP_ADAPTER_ON_SENDERS_ACTIVE,
             this.onConnected,
             this
         );
 
         // listen for disconnected
         VizbeeEventEmitter.addListener(
-            VizbeeEventEmitter.events.APP_ADAPTER_ON_DISCONNECTED,
+            VizbeeEventEmitter.events.APP_ADAPTER_ON_SENDERS_INACTIVE,
             this.onDisconnected,
             this
         );
