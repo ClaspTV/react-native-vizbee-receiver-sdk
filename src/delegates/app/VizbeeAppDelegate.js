@@ -2,11 +2,11 @@ export default class VizbeeAppDelegate {
 
     constructor() {}
 
-    onConnected() {
+    onSendersActive() {
         
     }
 
-    onDisconnected() {
+    onSendersInactive() {
         
     }
 

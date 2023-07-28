@@ -38,14 +38,14 @@ export default class AppAdapter {
         // listen for connected
         VizbeeEventEmitter.addListener(
             VizbeeEventEmitter.events.APP_ADAPTER_ON_SENDERS_ACTIVE,
-            this.onConnected,
+            this.onSendersActive,
             this
         );
 
         // listen for disconnected
         VizbeeEventEmitter.addListener(
             VizbeeEventEmitter.events.APP_ADAPTER_ON_SENDERS_INACTIVE,
-            this.onDisconnected,
+            this.onSendersInactive,
             this
         );
 
@@ -64,15 +64,15 @@ export default class AppAdapter {
         );
     }
    
-    onConnected() {
+    onSendersActive() {
         if (this.appDelegate) {
-            this.appDelegate.onConnected();
+            this.appDelegate.onSendersActive();
         }
     }
 
-    onDisconnected() {
+    onSendersInactive() {
         if (this.appDelegate) {
-            this.appDelegate.onDisconnected();
+            this.appDelegate.onSendersInactive();
         }
     }
 
