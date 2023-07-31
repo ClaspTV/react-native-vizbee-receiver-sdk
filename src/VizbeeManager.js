@@ -6,6 +6,7 @@ const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
 class VizbeeManager {
 
     constructor() {
+        this.isSDKInitialized = false;
         this.appAdapter = new AppAdapter();
         this.playerAdapter = new PlayerAdapter();
     }
@@ -24,11 +25,18 @@ class VizbeeManager {
 
     init(appId, appDelegate) {
 
+        if (this.isSDKInitialized) {
+            return;
+        }
+
         // set app delegate
         this.setAppDelegate(appDelegate);
 
         // initialize the sdk
         VizbeeNativeManager.init(appId);
+
+        // TODO: set based on event from native side
+        this.isSDKInitialized = true;
     }
 
     //---
