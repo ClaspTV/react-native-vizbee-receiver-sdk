@@ -1,0 +1,28 @@
+{
+  "source": "./src",
+  "includes": [
+    "VizbeeManager.js",
+    "delegates/app/VizbeeAppDelegate.js",
+    "delegates/player/VizbeePlayerDelegate.js",
+    "messages/VizbeePlayerState.js",
+    "messages/VizbeeVideoInfo.js",
+    "messages/VizbeeVideoStatus.js"
+  ],
+  "destination": "./docs/esdoc",
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin",
+      "option": {
+        "brand": {
+          "title": "React Native Vizbee Receiver SDK"
+        }
+      }
+    },
+    {
+      "name": "esdoc-publish-html-plugin"
+    },
+    {
+      "name": "esdoc-react-plugin"
+    }
+  ]
+}

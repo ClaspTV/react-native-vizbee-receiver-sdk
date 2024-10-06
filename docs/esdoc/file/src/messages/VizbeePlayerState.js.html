@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/messages/VizbeePlayerState.js | React Native Vizbee Receiver SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="React Native SDK for Vizbee Receiver"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="React Native Vizbee Receiver SDK"><meta property="twitter:description" content="React Native SDK for Vizbee Receiver"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/ClaspTV/react-native-vizbee-receiver-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/VizbeeManager.js~VizbeeManager.html">VizbeeManager</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vizbeeManager">vizbeeManager</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#delegates-app">delegates/app</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate.html">VizbeeAppDelegate</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#delegates-player">delegates/player</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate.html">VizbeePlayerDelegate</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#messages">messages</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeePlayerState.js~VizbeePlayerState.html">VizbeePlayerState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo.html">VizbeeVideoInfo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus.html">VizbeeVideoStatus</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/messages/VizbeePlayerState.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * @class VizbeePlayerState
+ * @description Defines constants for various states of the video player in the Vizbee SDK.
+ * These states can be used to track and manage the player&apos;s current condition.
+ */
+export default class VizbeePlayerState {
+    /**
+     * @readonly
+     * @type {string}
+     * @description Player is in an idle state, not playing any content.
+     */
+    static get IDLE() { return &quot;idle&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Player is preparing to play content.
+     */
+    static get PREPARING() { return &quot;preparing&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Player is loading content.
+     */
+    static get LOADING() { return &quot;loading&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Playback has started.
+     */
+    static get STARTED() { return &quot;started&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Content is actively playing.
+     */
+    static get PLAYING() { return &quot;playing&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Playback is paused.
+     */
+    static get PAUSED() { return &quot;paused&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Player is buffering content.
+     */
+    static get BUFFERING() { return &quot;buffering&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Playback has been interrupted.
+     */
+    static get INTERRUPTED() { return &quot;interrupted&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Playback has finished.
+     */
+    static get FINISHED() { return &quot;finished&quot; };
+
+    /**
+     * @readonly
+     * @type {string}
+     * @description Playback has failed.
+     */
+    static get FAILED() { return &quot;failed&quot; };
+};</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

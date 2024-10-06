@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/messages/VizbeeVideoStatus.js | React Native Vizbee Receiver SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="React Native SDK for Vizbee Receiver"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="React Native Vizbee Receiver SDK"><meta property="twitter:description" content="React Native SDK for Vizbee Receiver"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/ClaspTV/react-native-vizbee-receiver-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/VizbeeManager.js~VizbeeManager.html">VizbeeManager</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vizbeeManager">vizbeeManager</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#delegates-app">delegates/app</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate.html">VizbeeAppDelegate</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#delegates-player">delegates/player</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate.html">VizbeePlayerDelegate</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#messages">messages</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeePlayerState.js~VizbeePlayerState.html">VizbeePlayerState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo.html">VizbeeVideoInfo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus.html">VizbeeVideoStatus</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/messages/VizbeeVideoStatus.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import VizbeePlayerState from &quot;./VizbeePlayerState&quot;;
+
+/**
+ * @class VizbeeVideoStatus
+ * @description Represents the current status of a video in the Vizbee SDK.
+ * This class provides methods to set and get various properties related to the video&apos;s playback status.
+ */
+export default class VizbeeVideoStatus {
+
+    /**
+     * @constructor
+     * @description Initializes a new instance of VizbeeVideoStatus with default values.
+     */
+    constructor() {
+
+        this._guid = &quot;&quot;;
+        this._playbackState = VizbeePlayerState.IDLE;
+        this._isPlayingAd = false;
+
+        this._currentPosition = -1;
+        this._duration = -1;
+    }
+
+    /**
+     * @property {string} guid
+     * @description Unique identifier for the video.
+     */
+    set guid(guid) {
+        this._guid = guid;
+    }
+    get guid() {
+        return this._guid;
+    }
+
+    /**
+     * @property {string} playbackState
+     * @description Current state of the video playback (e.g., IDLE, PLAYING, PAUSED).
+     * @see VizbeePlayerState for possible values.
+     */
+    set playbackState(playbackState) {
+        this._playbackState = playbackState;
+    }
+    get playbackState() {
+        return this._playbackState;
+    }
+
+    /**
+     * @property {boolean} isPlayingAd
+     * @description Indicates whether an advertisement is currently playing.
+     */
+    set isPlayingAd(isPlayingAd) {
+        this._isPlayingAd = isPlayingAd;
+    }
+    get isPlayingAd() {
+        return this._isPlayingAd;
+    }
+
+    /**
+     * @property {number} currentPosition
+     * @description Current playback position in milliseconds.
+     * @description Sets to -1 if the position is Infinity.
+     */
+    set currentPosition(positionInMillisecs) {
+        if (positionInMillisecs === Infinity) {
+            positionInMillisecs = -1;
+        }
+        this._currentPosition = positionInMillisecs;
+    }
+    get currentPosition() {
+        return this._currentPosition;
+    }
+
+    /**
+     * @property {number} duration
+     * @description Total duration of the video in milliseconds.
+     * @description Sets to -1 if the duration is Infinity (e.g., for live streams).
+     */
+    set duration(durationInMillisecs) {
+        if (durationInMillisecs === Infinity) {
+            durationInMillisecs = -1;
+        }
+        this._duration = durationInMillisecs;
+    }
+    get duration() {
+        return this._duration;
+    }
+
+    /**
+     * @method toJSON
+     * @description Converts the VizbeeVideoStatus object to a plain JavaScript object.
+     * @returns {Object} A plain JavaScript object representing the video status.
+     */
+    toJSON() {
+        return {
+            guid: this.guid,
+            playbackState: this.playbackState,
+            isPlayingAd: this.isPlayingAd,
+            currentPosition: this.currentPosition,
+            duration: this.duration
+        };
+    }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

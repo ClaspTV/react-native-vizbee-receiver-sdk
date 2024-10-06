@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/VizbeeManager.js | React Native Vizbee Receiver SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="React Native SDK for Vizbee Receiver"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="React Native Vizbee Receiver SDK"><meta property="twitter:description" content="React Native SDK for Vizbee Receiver"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/ClaspTV/react-native-vizbee-receiver-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/VizbeeManager.js~VizbeeManager.html">VizbeeManager</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vizbeeManager">vizbeeManager</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#delegates-app">delegates/app</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate.html">VizbeeAppDelegate</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#delegates-player">delegates/player</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate.html">VizbeePlayerDelegate</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#messages">messages</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeePlayerState.js~VizbeePlayerState.html">VizbeePlayerState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo.html">VizbeeVideoInfo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus.html">VizbeeVideoStatus</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/VizbeeManager.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { NativeModules } from &quot;react-native&quot;;
+import AppAdapter from &quot;./delegates/app/AppAdapter&quot;;
+import PlayerAdapter from &quot;./delegates/player/PlayerAdapter&quot;;
+
+const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
+
+/**
+ * @class VizbeeManager
+ * @description Manages the initialization and configuration of the Vizbee SDK for React Native.
+ * This class serves as a bridge between the React Native application and the native Vizbee SDK.
+ */
+class VizbeeManager {
+
+    /**
+     * @constructor
+     * @description Initializes a new instance of the VizbeeManager.
+     * Sets up the initial state and creates instances of AppAdapter and PlayerAdapter.
+     */
+    constructor() {
+        /**
+         * @property {boolean} isSDKInitialized - Indicates whether the SDK has been initialized.
+         * @private
+         */
+        this.isSDKInitialized = false;
+
+        /**
+         * @property {AppAdapter} appAdapter - Handles communication with the app delegate.
+         * @private
+         */
+        this.appAdapter = new AppAdapter();
+
+        /**
+         * @property {PlayerAdapter} playerAdapter - Handles communication with the player delegate.
+         * @private
+         */
+        this.playerAdapter = new PlayerAdapter();
+    }
+
+    //---
+    // Logging
+    //---
+
+    /**
+     * @method enableVerboseLogging
+     * @description Enables verbose logging in the native Vizbee SDK.
+     * This can be useful for debugging and troubleshooting.
+     */
+    enableVerboseLogging() {
+        VizbeeNativeManager.enableVerboseLogging();
+    }
+
+    //---
+    // Init
+    //---
+
+    /**
+     * @method init
+     * @description Initializes the Vizbee SDK with the provided app ID and delegate.
+     * This method should be called once when the app starts.
+     * @param {string} appId - The unique identifier for the application.
+     * @param {Object} appDelegate - The app delegate object implementing required methods.
+     */
+    init(appId, appDelegate) {
+        if (this.isSDKInitialized) {
+            return;
+        }
+
+        // Set app delegate
+        this.setAppDelegate(appDelegate);
+
+        // Initialize the SDK
+        VizbeeNativeManager.init(appId);
+
+        // TODO: Set based on event from native side
+        this.isSDKInitialized = true;
+    }
+
+    //---
+    // App Delegate
+    //---
+
+    /**
+     * @method setAppDelegate
+     * @description Sets the app delegate for handling app-related callbacks.
+     * @param {Object} appDelegate - The app delegate object implementing required methods.
+     */
+    setAppDelegate(appDelegate) {
+        this.appAdapter.setAppDelegate(appDelegate);
+    }
+
+    /**
+     * @method removeAppDelegate
+     * @description Removes the currently set app delegate.
+     */
+    removeAppDelegate() {
+        this.appAdapter.removeAppDelegate();
+    }
+
+    /**
+     * @method getAppDelegate
+     * @description Retrieves the currently set app delegate.
+     * @returns {Object|null} The current app delegate or null if not set.
+     */
+    getAppDelegate() {
+        return this.appAdapter.getAppDelegate();
+    }
+
+    //---
+    // Player Delegate
+    //---
+
+    /**
+     * @method setPlayerDelegate
+     * @description Sets the player delegate for handling player-related callbacks.
+     * @param {Object} playerDelegate - The player delegate object implementing required methods.
+     */
+    setPlayerDelegate(playerDelegate) {
+        this.playerAdapter.setPlayerDelegate(playerDelegate);
+    }
+
+    /**
+     * @method removePlayerDelegate
+     * @description Removes the currently set player delegate.
+     */
+    removePlayerDelegate() {
+        this.playerAdapter.removePlayerDelegate();
+    }
+
+    /**
+     * @method getPlayerDelegate
+     * @description Retrieves the currently set player delegate.
+     * @returns {Object|null} The current player delegate or null if not set.
+     */
+    getPlayerDelegate() {
+        return this.playerAdapter.getPlayerDelegate();
+    }
+}
+
+/**
+ * @exports {VizbeeManager}
+ * @description Exports a singleton instance of the VizbeeManager class.
+ * This ensures that only one instance of VizbeeManager is used throughout the application.
+ */
+export default new VizbeeManager()</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

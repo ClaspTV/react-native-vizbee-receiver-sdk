@@ -1,0 +1,2537 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "src/VizbeeManager.js",
+    "content": "import { NativeModules } from \"react-native\";\nimport AppAdapter from \"./delegates/app/AppAdapter\";\nimport PlayerAdapter from \"./delegates/player/PlayerAdapter\";\n\nconst VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};\n\n/**\n * @class VizbeeManager\n * @description Manages the initialization and configuration of the Vizbee SDK for React Native.\n * This class serves as a bridge between the React Native application and the native Vizbee SDK.\n */\nclass VizbeeManager {\n\n    /**\n     * @constructor\n     * @description Initializes a new instance of the VizbeeManager.\n     * Sets up the initial state and creates instances of AppAdapter and PlayerAdapter.\n     */\n    constructor() {\n        /**\n         * @property {boolean} isSDKInitialized - Indicates whether the SDK has been initialized.\n         * @private\n         */\n        this.isSDKInitialized = false;\n\n        /**\n         * @property {AppAdapter} appAdapter - Handles communication with the app delegate.\n         * @private\n         */\n        this.appAdapter = new AppAdapter();\n\n        /**\n         * @property {PlayerAdapter} playerAdapter - Handles communication with the player delegate.\n         * @private\n         */\n        this.playerAdapter = new PlayerAdapter();\n    }\n\n    //---\n    // Logging\n    //---\n\n    /**\n     * @method enableVerboseLogging\n     * @description Enables verbose logging in the native Vizbee SDK.\n     * This can be useful for debugging and troubleshooting.\n     */\n    enableVerboseLogging() {\n        VizbeeNativeManager.enableVerboseLogging();\n    }\n\n    //---\n    // Init\n    //---\n\n    /**\n     * @method init\n     * @description Initializes the Vizbee SDK with the provided app ID and delegate.\n     * This method should be called once when the app starts.\n     * @param {string} appId - The unique identifier for the application.\n     * @param {Object} appDelegate - The app delegate object implementing required methods.\n     */\n    init(appId, appDelegate) {\n        if (this.isSDKInitialized) {\n            return;\n        }\n\n        // Set app delegate\n        this.setAppDelegate(appDelegate);\n\n        // Initialize the SDK\n        VizbeeNativeManager.init(appId);\n\n        // TODO: Set based on event from native side\n        this.isSDKInitialized = true;\n    }\n\n    //---\n    // App Delegate\n    //---\n\n    /**\n     * @method setAppDelegate\n     * @description Sets the app delegate for handling app-related callbacks.\n     * @param {Object} appDelegate - The app delegate object implementing required methods.\n     */\n    setAppDelegate(appDelegate) {\n        this.appAdapter.setAppDelegate(appDelegate);\n    }\n\n    /**\n     * @method removeAppDelegate\n     * @description Removes the currently set app delegate.\n     */\n    removeAppDelegate() {\n        this.appAdapter.removeAppDelegate();\n    }\n\n    /**\n     * @method getAppDelegate\n     * @description Retrieves the currently set app delegate.\n     * @returns {Object|null} The current app delegate or null if not set.\n     */\n    getAppDelegate() {\n        return this.appAdapter.getAppDelegate();\n    }\n\n    //---\n    // Player Delegate\n    //---\n\n    /**\n     * @method setPlayerDelegate\n     * @description Sets the player delegate for handling player-related callbacks.\n     * @param {Object} playerDelegate - The player delegate object implementing required methods.\n     */\n    setPlayerDelegate(playerDelegate) {\n        this.playerAdapter.setPlayerDelegate(playerDelegate);\n    }\n\n    /**\n     * @method removePlayerDelegate\n     * @description Removes the currently set player delegate.\n     */\n    removePlayerDelegate() {\n        this.playerAdapter.removePlayerDelegate();\n    }\n\n    /**\n     * @method getPlayerDelegate\n     * @description Retrieves the currently set player delegate.\n     * @returns {Object|null} The current player delegate or null if not set.\n     */\n    getPlayerDelegate() {\n        return this.playerAdapter.getPlayerDelegate();\n    }\n}\n\n/**\n * @exports {VizbeeManager}\n * @description Exports a singleton instance of the VizbeeManager class.\n * This ensures that only one instance of VizbeeManager is used throughout the application.\n */\nexport default new VizbeeManager()",
+    "static": true,
+    "longname": "/Users/shiva/Documents/workspace/vizbee/react-native-vizbee-receiver-sdk/src/VizbeeManager.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "variable",
+    "name": "VizbeeNativeManager",
+    "memberof": "src/VizbeeManager.js",
+    "static": true,
+    "longname": "src/VizbeeManager.js~VizbeeNativeManager",
+    "access": "public",
+    "export": false,
+    "importPath": "react-native-vizbee-receiver-sdk/src/VizbeeManager.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "class",
+    "name": "VizbeeManager",
+    "memberof": "src/VizbeeManager.js",
+    "static": true,
+    "longname": "src/VizbeeManager.js~VizbeeManager",
+    "access": "public",
+    "export": true,
+    "importPath": "react-native-vizbee-receiver-sdk/src/VizbeeManager.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 12,
+    "pseudoExport": true,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "VizbeeManager"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Manages the initialization and configuration of the Vizbee SDK for React Native.\nThis class serves as a bridge between the React Native application and the native Vizbee SDK."
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 3,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 19,
+    "unknown": [
+      {
+        "tagName": "@constructor",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Initializes a new instance of the VizbeeManager.\nSets up the initial state and creates instances of AppAdapter and PlayerAdapter."
+      }
+    ]
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "name": "isSDKInitialized",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#isSDKInitialized",
+    "access": "private",
+    "description": "",
+    "lineNumber": 24,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "isSDKInitialized",
+        "description": "Indicates whether the SDK has been initialized."
+      }
+    ],
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "member",
+    "name": "appAdapter",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#appAdapter",
+    "access": "private",
+    "description": "",
+    "lineNumber": 30,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "AppAdapter"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "appAdapter",
+        "description": "Handles communication with the app delegate."
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "member",
+    "name": "playerAdapter",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#playerAdapter",
+    "access": "private",
+    "description": "",
+    "lineNumber": 36,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "PlayerAdapter"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "playerAdapter",
+        "description": "Handles communication with the player delegate."
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 7,
+    "kind": "method",
+    "name": "enableVerboseLogging",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#enableVerboseLogging",
+    "access": "public",
+    "description": "",
+    "lineNumber": 48,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "enableVerboseLogging"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Enables verbose logging in the native Vizbee SDK.\nThis can be useful for debugging and troubleshooting."
+      }
+    ],
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 8,
+    "kind": "method",
+    "name": "init",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#init",
+    "access": "public",
+    "description": "",
+    "lineNumber": 63,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "init"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Initializes the Vizbee SDK with the provided app ID and delegate.\nThis method should be called once when the app starts."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "appId",
+        "description": "The unique identifier for the application."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "appDelegate",
+        "description": "The app delegate object implementing required methods."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "name": "setAppDelegate",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#setAppDelegate",
+    "access": "public",
+    "description": "",
+    "lineNumber": 87,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "setAppDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Sets the app delegate for handling app-related callbacks."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "appDelegate",
+        "description": "The app delegate object implementing required methods."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "name": "removeAppDelegate",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#removeAppDelegate",
+    "access": "public",
+    "description": "",
+    "lineNumber": 95,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "removeAppDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Removes the currently set app delegate."
+      }
+    ],
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "name": "getAppDelegate",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#getAppDelegate",
+    "access": "public",
+    "description": "",
+    "lineNumber": 104,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "getAppDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Retrieves the currently set app delegate."
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object|null} The current app delegate or null if not set."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object",
+        "null"
+      ],
+      "spread": false,
+      "description": "The current app delegate or null if not set."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 13,
+    "kind": "method",
+    "name": "setPlayerDelegate",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#setPlayerDelegate",
+    "access": "public",
+    "description": "",
+    "lineNumber": 117,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "setPlayerDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Sets the player delegate for handling player-related callbacks."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "playerDelegate",
+        "description": "The player delegate object implementing required methods."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "name": "removePlayerDelegate",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#removePlayerDelegate",
+    "access": "public",
+    "description": "",
+    "lineNumber": 125,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "removePlayerDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Removes the currently set player delegate."
+      }
+    ],
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "name": "getPlayerDelegate",
+    "memberof": "src/VizbeeManager.js~VizbeeManager",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/VizbeeManager.js~VizbeeManager#getPlayerDelegate",
+    "access": "public",
+    "description": "",
+    "lineNumber": 134,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "getPlayerDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Retrieves the currently set player delegate."
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object|null} The current player delegate or null if not set."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object",
+        "null"
+      ],
+      "spread": false,
+      "description": "The current player delegate or null if not set."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 16,
+    "kind": "variable",
+    "name": "vizbeeManager",
+    "memberof": "src/VizbeeManager.js",
+    "static": true,
+    "longname": "src/VizbeeManager.js~vizbeeManager",
+    "access": "public",
+    "export": true,
+    "importPath": "react-native-vizbee-receiver-sdk/src/VizbeeManager.js",
+    "importStyle": "vizbeeManager",
+    "description": "",
+    "lineNumber": 144,
+    "unknown": [
+      {
+        "tagName": "@exports",
+        "tagValue": "{VizbeeManager}"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Exports a singleton instance of the VizbeeManager class.\nThis ensures that only one instance of VizbeeManager is used throughout the application."
+      }
+    ],
+    "type": {
+      "types": [
+        "src/VizbeeManager.js~VizbeeManager"
+      ]
+    }
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "name": "src/delegates/app/VizbeeAppDelegate.js",
+    "content": "/**\n * @class VizbeeAppDelegate\n * @description Defines the interface for handling app-related callbacks from the Vizbee SDK.\n * Developers should extend this class and implement these methods to handle specific app events.\n */\nexport default class VizbeeAppDelegate {\n\n    /**\n     * @constructor\n     * @description Initializes a new instance of the VizbeeAppDelegate.\n     */\n    constructor() {}\n\n    /**\n     * @method onSendersActive\n     * @description Called when one or more senders (casting devices) become active.\n     */\n    onSendersActive() {\n        \n    }\n\n    /**\n     * @method onSendersInactive\n     * @description Called when all senders (casting devices) become inactive.\n     */\n    onSendersInactive() {\n        \n    }\n\n    /**\n     * @method onStartVideo\n     * @description Called when a request to start a video is received.\n     * @param {Object} videoInfo - Information about the video to be started.\n     */\n    onStartVideo(videoInfo) {\n        \n    }\n\n    /**\n     * @method onSignIn\n     * @description Called when a sign-in request is received.\n     * @param {Object} signInInfo - Information related to the sign-in request.\n     */\n    onSignIn(signInInfo) {\n        \n    }\n}",
+    "static": true,
+    "longname": "/Users/shiva/Documents/workspace/vizbee/react-native-vizbee-receiver-sdk/src/delegates/app/VizbeeAppDelegate.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 18,
+    "kind": "class",
+    "name": "VizbeeAppDelegate",
+    "memberof": "src/delegates/app/VizbeeAppDelegate.js",
+    "static": true,
+    "longname": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate",
+    "access": "public",
+    "export": true,
+    "importPath": "react-native-vizbee-receiver-sdk/src/delegates/app/VizbeeAppDelegate.js",
+    "importStyle": "VizbeeAppDelegate",
+    "description": "",
+    "lineNumber": 6,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "VizbeeAppDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Defines the interface for handling app-related callbacks from the Vizbee SDK.\nDevelopers should extend this class and implement these methods to handle specific app events."
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 19,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 12,
+    "unknown": [
+      {
+        "tagName": "@constructor",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Initializes a new instance of the VizbeeAppDelegate."
+      }
+    ]
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "name": "onSendersActive",
+    "memberof": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate#onSendersActive",
+    "access": "public",
+    "description": "",
+    "lineNumber": 18,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onSendersActive"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when one or more senders (casting devices) become active."
+      }
+    ],
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "name": "onSendersInactive",
+    "memberof": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate#onSendersInactive",
+    "access": "public",
+    "description": "",
+    "lineNumber": 26,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onSendersInactive"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when all senders (casting devices) become inactive."
+      }
+    ],
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "name": "onStartVideo",
+    "memberof": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate#onStartVideo",
+    "access": "public",
+    "description": "",
+    "lineNumber": 35,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onStartVideo"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when a request to start a video is received."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "videoInfo",
+        "description": "Information about the video to be started."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "name": "onSignIn",
+    "memberof": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/app/VizbeeAppDelegate.js~VizbeeAppDelegate#onSignIn",
+    "access": "public",
+    "description": "",
+    "lineNumber": 44,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onSignIn"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when a sign-in request is received."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "signInInfo",
+        "description": "Information related to the sign-in request."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 24,
+    "kind": "file",
+    "name": "src/delegates/player/VizbeePlayerDelegate.js",
+    "content": "/**\n * @class VizbeePlayerDelegate\n * @description Defines the interface for handling player-related callbacks from the Vizbee SDK.\n * Developers should extend this class and implement these methods to control the video player.\n */\nexport default class VizbeePlayerDelegate {\n\n    /**\n     * @method onPlay\n     * @description Called when a play command is received.\n     */\n    onPlay() {}\n\n    /**\n     * @method onPause\n     * @description Called when a pause command is received.\n     */\n    onPause() {}\n\n    /**\n     * @method onSeek\n     * @description Called when a seek command is received.\n     * @param {number} seekPos - The position to seek to, in seconds.\n     */\n    onSeek(seekPos) {}\n\n    /**\n     * @method onStop\n     * @description Called when a stop command is received.\n     * @param {string} stopReason - The reason for stopping playback.\n     */\n    onStop(stopReason) {}\n\n    /**\n     * @method getVideoInfo\n     * @description Should return the current video information.\n     * @returns {Object} An object containing information about the current video.\n     */\n    getVideoInfo() {}\n\n    /**\n     * @method getVideoStatus\n     * @description Should return the current status of the video playback.\n     * @returns {Object} An object containing the current status of the video playback.\n     */\n    getVideoStatus() {}\n}",
+    "static": true,
+    "longname": "/Users/shiva/Documents/workspace/vizbee/react-native-vizbee-receiver-sdk/src/delegates/player/VizbeePlayerDelegate.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 25,
+    "kind": "class",
+    "name": "VizbeePlayerDelegate",
+    "memberof": "src/delegates/player/VizbeePlayerDelegate.js",
+    "static": true,
+    "longname": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate",
+    "access": "public",
+    "export": true,
+    "importPath": "react-native-vizbee-receiver-sdk/src/delegates/player/VizbeePlayerDelegate.js",
+    "importStyle": "VizbeePlayerDelegate",
+    "description": "",
+    "lineNumber": 6,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "VizbeePlayerDelegate"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Defines the interface for handling player-related callbacks from the Vizbee SDK.\nDevelopers should extend this class and implement these methods to control the video player."
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "name": "onPlay",
+    "memberof": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate#onPlay",
+    "access": "public",
+    "description": "",
+    "lineNumber": 12,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onPlay"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when a play command is received."
+      }
+    ],
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "name": "onPause",
+    "memberof": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate#onPause",
+    "access": "public",
+    "description": "",
+    "lineNumber": 18,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onPause"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when a pause command is received."
+      }
+    ],
+    "params": [],
+    "return": null
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "name": "onSeek",
+    "memberof": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate#onSeek",
+    "access": "public",
+    "description": "",
+    "lineNumber": 25,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onSeek"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when a seek command is received."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "seekPos",
+        "description": "The position to seek to, in seconds."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "name": "onStop",
+    "memberof": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate#onStop",
+    "access": "public",
+    "description": "",
+    "lineNumber": 32,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "onStop"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Called when a stop command is received."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "stopReason",
+        "description": "The reason for stopping playback."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "name": "getVideoInfo",
+    "memberof": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate#getVideoInfo",
+    "access": "public",
+    "description": "",
+    "lineNumber": 39,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "getVideoInfo"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Should return the current video information."
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} An object containing information about the current video."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "An object containing information about the current video."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "name": "getVideoStatus",
+    "memberof": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/delegates/player/VizbeePlayerDelegate.js~VizbeePlayerDelegate#getVideoStatus",
+    "access": "public",
+    "description": "",
+    "lineNumber": 46,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "getVideoStatus"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Should return the current status of the video playback."
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} An object containing the current status of the video playback."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "An object containing the current status of the video playback."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 32,
+    "kind": "file",
+    "name": "src/messages/VizbeePlayerState.js",
+    "content": "/**\n * @class VizbeePlayerState\n * @description Defines constants for various states of the video player in the Vizbee SDK.\n * These states can be used to track and manage the player's current condition.\n */\nexport default class VizbeePlayerState {\n    /**\n     * @readonly\n     * @type {string}\n     * @description Player is in an idle state, not playing any content.\n     */\n    static get IDLE() { return \"idle\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Player is preparing to play content.\n     */\n    static get PREPARING() { return \"preparing\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Player is loading content.\n     */\n    static get LOADING() { return \"loading\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Playback has started.\n     */\n    static get STARTED() { return \"started\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Content is actively playing.\n     */\n    static get PLAYING() { return \"playing\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Playback is paused.\n     */\n    static get PAUSED() { return \"paused\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Player is buffering content.\n     */\n    static get BUFFERING() { return \"buffering\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Playback has been interrupted.\n     */\n    static get INTERRUPTED() { return \"interrupted\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Playback has finished.\n     */\n    static get FINISHED() { return \"finished\" };\n\n    /**\n     * @readonly\n     * @type {string}\n     * @description Playback has failed.\n     */\n    static get FAILED() { return \"failed\" };\n};",
+    "static": true,
+    "longname": "/Users/shiva/Documents/workspace/vizbee/react-native-vizbee-receiver-sdk/src/messages/VizbeePlayerState.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 33,
+    "kind": "class",
+    "name": "VizbeePlayerState",
+    "memberof": "src/messages/VizbeePlayerState.js",
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "access": "public",
+    "export": true,
+    "importPath": "react-native-vizbee-receiver-sdk/src/messages/VizbeePlayerState.js",
+    "importStyle": "VizbeePlayerState",
+    "description": "",
+    "lineNumber": 6,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "VizbeePlayerState"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Defines constants for various states of the video player in the Vizbee SDK.\nThese states can be used to track and manage the player's current condition."
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 34,
+    "kind": "get",
+    "name": "IDLE",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.IDLE",
+    "access": "public",
+    "description": "",
+    "lineNumber": 12,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Player is in an idle state, not playing any content."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 35,
+    "kind": "get",
+    "name": "PREPARING",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.PREPARING",
+    "access": "public",
+    "description": "",
+    "lineNumber": 19,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Player is preparing to play content."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 36,
+    "kind": "get",
+    "name": "LOADING",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.LOADING",
+    "access": "public",
+    "description": "",
+    "lineNumber": 26,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Player is loading content."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 37,
+    "kind": "get",
+    "name": "STARTED",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.STARTED",
+    "access": "public",
+    "description": "",
+    "lineNumber": 33,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Playback has started."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 38,
+    "kind": "get",
+    "name": "PLAYING",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.PLAYING",
+    "access": "public",
+    "description": "",
+    "lineNumber": 40,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Content is actively playing."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 39,
+    "kind": "get",
+    "name": "PAUSED",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.PAUSED",
+    "access": "public",
+    "description": "",
+    "lineNumber": 47,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Playback is paused."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 40,
+    "kind": "get",
+    "name": "BUFFERING",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.BUFFERING",
+    "access": "public",
+    "description": "",
+    "lineNumber": 54,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Player is buffering content."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 41,
+    "kind": "get",
+    "name": "INTERRUPTED",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.INTERRUPTED",
+    "access": "public",
+    "description": "",
+    "lineNumber": 61,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Playback has been interrupted."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 42,
+    "kind": "get",
+    "name": "FINISHED",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.FINISHED",
+    "access": "public",
+    "description": "",
+    "lineNumber": 68,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Playback has finished."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 43,
+    "kind": "get",
+    "name": "FAILED",
+    "memberof": "src/messages/VizbeePlayerState.js~VizbeePlayerState",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/messages/VizbeePlayerState.js~VizbeePlayerState.FAILED",
+    "access": "public",
+    "description": "",
+    "lineNumber": 75,
+    "unknown": [
+      {
+        "tagName": "@readonly",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Playback has failed."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 44,
+    "kind": "file",
+    "name": "src/messages/VizbeeVideoInfo.js",
+    "content": "/**\n * @class VizbeeVideoInfo\n * @description Represents detailed information about a video in the Vizbee SDK.\n * This class provides methods to set and get various properties of a video.\n */\nexport default class VizbeeVideoInfo {\n\n    /**\n     * @constructor\n     * @description Initializes a new instance of VizbeeVideoInfo with default values.\n     */\n    constructor() {\n\n        this._guid = \"\";\n        this._isLive = false;\n        this._startPosition = 0;\n\n        this._videoURL = \"\";\n        this._imageURL = \"\";\n        \n        this._title = \"\";\n        this._subtitle = \"\";\n        this._description = \"\";\n        \n        this._tracks = [];\n        \n        this._customStreamInfo = undefined;\n        this._customMetadata = undefined;\n    }\n\n    /**\n     * @method toRNVideoInfo\n     * @description Converts the VizbeeVideoInfo object to a plain JavaScript object for React Native.\n     * @returns {Object} A plain JavaScript object representing the video information.\n     */\n    toRNVideoInfo() {\n\n        let rnVideoInfo = {};\n        rnVideoInfo.guid = this._guid;\n        rnVideoInfo.isLive = this._isLive;\n        rnVideoInfo.startPosition = this._startPosition;\n\n        rnVideoInfo.videoUrl = this._videoURL;\n        rnVideoInfo.imgUrl = this._imageURL;\n\n        rnVideoInfo.title = this._title;\n        rnVideoInfo.subtitle = this._subtitle;\n        rnVideoInfo.description = this._description;\n        \n        rnVideoInfo.tracks = this._tracks;\n\n        rnVideoInfo.customStreamInfo = this._customStreamInfo;\n        rnVideoInfo.customMetadata = this._customMetadata;\n\n        return rnVideoInfo;\n    }\n\n    /**\n     * @method fromRNVideoInfo\n     * @description Populates the VizbeeVideoInfo object from a plain JavaScript object.\n     * @param {Object} rnVideoInfo - A plain JavaScript object containing video information.\n     */\n    fromRNVideoInfo(rnVideoInfo) {\n\n        if (!rnVideoInfo) {\n            return;\n        }\n\n        this._guid = rnVideoInfo.guid;\n        this._isLive = rnVideoInfo.isLive;\n        this._startPosition = rnVideoInfo.startPosition;\n\n        this._videoURL = rnVideoInfo.videoURL;\n        this._imageURL = rnVideoInfo.imageURL;\n\n        this._title = rnVideoInfo.title;\n        this._subtitle = rnVideoInfo.subtitle;\n        this._description = rnVideoInfo.description;\n        \n        this._tracks = rnVideoInfo.tracks;\n\n        this._customStreamInfo = rnVideoInfo.customStreamInfo;\n        this._customMetadata = rnVideoInfo.customMetadata;\n    }\n\n    /**\n     * @property {boolean} isLive\n     * @description Indicates whether the video is a live stream.\n     */\n    set isLive(isLive) {\n        this._isLive = isLive;\n    }\n    get isLive() {\n        return this._isLive;\n    }\n\n    /**\n     * @property {string} guid\n     * @description Unique identifier for the video.\n     */\n    set guid(guid) {\n        this._guid = guid;\n    }\n    get guid() {\n        return this._guid;\n    }\n\n    /**\n     * @property {string} videoURL\n     * @description URL of the video content.\n     */\n    set videoURL(videoURL) {\n        this._videoURL = videoURL;\n    }\n    get videoURL() {\n        return this._videoURL;\n    }\n\n    /**\n     * @property {string} imageURL\n     * @description URL of the video thumbnail or poster image.\n     */\n    set imageURL(imageURL) {\n        this._imageURL = imageURL;\n    }\n    get imageURL() {\n        return this._imageURL;\n    }\n\n    /**\n     * @property {string} title\n     * @description Title of the video.\n     */\n    set title(title) {\n        this._title = title;\n    }\n    get title() {\n        return this._title;\n    }\n\n    /**\n     * @property {string} subtitle\n     * @description Subtitle or secondary title of the video.\n     */\n    set subtitle(subtitle) {\n        this._subtitle = subtitle;\n    }\n    get subtitle() {\n        return this._subtitle;\n    }\n\n    /**\n     * @property {string} description\n     * @description Detailed description of the video.\n     */\n    set description(description) {\n        this._description = description;\n    }\n    get description() {\n        return this._description;\n    }\n\n    /**\n     * @property {number} startPosition\n     * @description Starting position of the video in seconds.\n     */\n    set startPosition(startPosition) {\n        this._startPosition = startPosition;\n    }\n    get startPosition() {\n        return this._startPosition;\n    }\n\n    /**\n     * @property {Array} tracks\n     * @description Array of track information (e.g., subtitles, audio tracks).\n     */\n    set tracks(tracks) {\n        this._tracks = tracks;\n    }\n    get tracks() {\n        return this._tracks;\n    }\n\n    /**\n     * @property {Object} customStreamInfo\n     * @description Custom streaming information for the video.\n     */\n    set customStreamInfo(customStreamInfo) {\n        this._customStreamInfo = customStreamInfo;\n    }\n    get customStreamInfo() {\n        return this._customStreamInfo;\n    }\n\n    /**\n     * @property {Object} customMetadata\n     * @description Custom metadata associated with the video.\n     */\n    set customMetadata(customMetadata) {\n        this._customMetadata = customMetadata;\n    }\n    get customMetadata() {\n        return this._customMetadata;\n    }\n}",
+    "static": true,
+    "longname": "/Users/shiva/Documents/workspace/vizbee/react-native-vizbee-receiver-sdk/src/messages/VizbeeVideoInfo.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 45,
+    "kind": "class",
+    "name": "VizbeeVideoInfo",
+    "memberof": "src/messages/VizbeeVideoInfo.js",
+    "static": true,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "access": "public",
+    "export": true,
+    "importPath": "react-native-vizbee-receiver-sdk/src/messages/VizbeeVideoInfo.js",
+    "importStyle": "VizbeeVideoInfo",
+    "description": "",
+    "lineNumber": 6,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "VizbeeVideoInfo"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Represents detailed information about a video in the Vizbee SDK.\nThis class provides methods to set and get various properties of a video."
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 46,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 12,
+    "unknown": [
+      {
+        "tagName": "@constructor",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Initializes a new instance of VizbeeVideoInfo with default values."
+      }
+    ]
+  },
+  {
+    "__docId__": 47,
+    "kind": "member",
+    "name": "_guid",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_guid",
+    "access": "private",
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 48,
+    "kind": "member",
+    "name": "_isLive",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_isLive",
+    "access": "private",
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 49,
+    "kind": "member",
+    "name": "_startPosition",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_startPosition",
+    "access": "private",
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 50,
+    "kind": "member",
+    "name": "_videoURL",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_videoURL",
+    "access": "private",
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 51,
+    "kind": "member",
+    "name": "_imageURL",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_imageURL",
+    "access": "private",
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "member",
+    "name": "_title",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_title",
+    "access": "private",
+    "description": null,
+    "lineNumber": 21,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "member",
+    "name": "_subtitle",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_subtitle",
+    "access": "private",
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 54,
+    "kind": "member",
+    "name": "_description",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_description",
+    "access": "private",
+    "description": null,
+    "lineNumber": 23,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "member",
+    "name": "_tracks",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_tracks",
+    "access": "private",
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*[]"
+      ]
+    }
+  },
+  {
+    "__docId__": 56,
+    "kind": "member",
+    "name": "_customStreamInfo",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_customStreamInfo",
+    "access": "private",
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "member",
+    "name": "_customMetadata",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#_customMetadata",
+    "access": "private",
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "method",
+    "name": "toRNVideoInfo",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#toRNVideoInfo",
+    "access": "public",
+    "description": "",
+    "lineNumber": 36,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "toRNVideoInfo"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Converts the VizbeeVideoInfo object to a plain JavaScript object for React Native."
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} A plain JavaScript object representing the video information."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "A plain JavaScript object representing the video information."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 59,
+    "kind": "method",
+    "name": "fromRNVideoInfo",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#fromRNVideoInfo",
+    "access": "public",
+    "description": "",
+    "lineNumber": 63,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "fromRNVideoInfo"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Populates the VizbeeVideoInfo object from a plain JavaScript object."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "rnVideoInfo",
+        "description": "A plain JavaScript object containing video information."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 71,
+    "kind": "set",
+    "name": "isLive",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#isLive",
+    "access": "public",
+    "description": "",
+    "lineNumber": 90,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Indicates whether the video is a live stream."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "isLive",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 73,
+    "kind": "get",
+    "name": "isLive",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#isLive",
+    "access": "public",
+    "description": null,
+    "lineNumber": 93,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 74,
+    "kind": "set",
+    "name": "guid",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#guid",
+    "access": "public",
+    "description": "",
+    "lineNumber": 101,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Unique identifier for the video."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "guid",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 76,
+    "kind": "get",
+    "name": "guid",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#guid",
+    "access": "public",
+    "description": null,
+    "lineNumber": 104,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 77,
+    "kind": "set",
+    "name": "videoURL",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#videoURL",
+    "access": "public",
+    "description": "",
+    "lineNumber": 112,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "URL of the video content."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "videoURL",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 79,
+    "kind": "get",
+    "name": "videoURL",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#videoURL",
+    "access": "public",
+    "description": null,
+    "lineNumber": 115,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 80,
+    "kind": "set",
+    "name": "imageURL",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#imageURL",
+    "access": "public",
+    "description": "",
+    "lineNumber": 123,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "URL of the video thumbnail or poster image."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "imageURL",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 82,
+    "kind": "get",
+    "name": "imageURL",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#imageURL",
+    "access": "public",
+    "description": null,
+    "lineNumber": 126,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 83,
+    "kind": "set",
+    "name": "title",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#title",
+    "access": "public",
+    "description": "",
+    "lineNumber": 134,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Title of the video."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "title",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 85,
+    "kind": "get",
+    "name": "title",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#title",
+    "access": "public",
+    "description": null,
+    "lineNumber": 137,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 86,
+    "kind": "set",
+    "name": "subtitle",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#subtitle",
+    "access": "public",
+    "description": "",
+    "lineNumber": 145,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Subtitle or secondary title of the video."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "subtitle",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 88,
+    "kind": "get",
+    "name": "subtitle",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#subtitle",
+    "access": "public",
+    "description": null,
+    "lineNumber": 148,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 89,
+    "kind": "set",
+    "name": "description",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#description",
+    "access": "public",
+    "description": "",
+    "lineNumber": 156,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Detailed description of the video."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "description",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 91,
+    "kind": "get",
+    "name": "description",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#description",
+    "access": "public",
+    "description": null,
+    "lineNumber": 159,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 92,
+    "kind": "set",
+    "name": "startPosition",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#startPosition",
+    "access": "public",
+    "description": "",
+    "lineNumber": 167,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Starting position of the video in seconds."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "startPosition",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 94,
+    "kind": "get",
+    "name": "startPosition",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#startPosition",
+    "access": "public",
+    "description": null,
+    "lineNumber": 170,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 95,
+    "kind": "set",
+    "name": "tracks",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#tracks",
+    "access": "public",
+    "description": "",
+    "lineNumber": 178,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Array of track information (e.g., subtitles, audio tracks)."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "tracks",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 97,
+    "kind": "get",
+    "name": "tracks",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#tracks",
+    "access": "public",
+    "description": null,
+    "lineNumber": 181,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 98,
+    "kind": "set",
+    "name": "customStreamInfo",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#customStreamInfo",
+    "access": "public",
+    "description": "",
+    "lineNumber": 189,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Custom streaming information for the video."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "customStreamInfo",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 100,
+    "kind": "get",
+    "name": "customStreamInfo",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#customStreamInfo",
+    "access": "public",
+    "description": null,
+    "lineNumber": 192,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 101,
+    "kind": "set",
+    "name": "customMetadata",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#customMetadata",
+    "access": "public",
+    "description": "",
+    "lineNumber": 200,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Custom metadata associated with the video."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "customMetadata",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 103,
+    "kind": "get",
+    "name": "customMetadata",
+    "memberof": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoInfo.js~VizbeeVideoInfo#customMetadata",
+    "access": "public",
+    "description": null,
+    "lineNumber": 203,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 104,
+    "kind": "file",
+    "name": "src/messages/VizbeeVideoStatus.js",
+    "content": "import VizbeePlayerState from \"./VizbeePlayerState\";\n\n/**\n * @class VizbeeVideoStatus\n * @description Represents the current status of a video in the Vizbee SDK.\n * This class provides methods to set and get various properties related to the video's playback status.\n */\nexport default class VizbeeVideoStatus {\n\n    /**\n     * @constructor\n     * @description Initializes a new instance of VizbeeVideoStatus with default values.\n     */\n    constructor() {\n\n        this._guid = \"\";\n        this._playbackState = VizbeePlayerState.IDLE;\n        this._isPlayingAd = false;\n\n        this._currentPosition = -1;\n        this._duration = -1;\n    }\n\n    /**\n     * @property {string} guid\n     * @description Unique identifier for the video.\n     */\n    set guid(guid) {\n        this._guid = guid;\n    }\n    get guid() {\n        return this._guid;\n    }\n\n    /**\n     * @property {string} playbackState\n     * @description Current state of the video playback (e.g., IDLE, PLAYING, PAUSED).\n     * @see VizbeePlayerState for possible values.\n     */\n    set playbackState(playbackState) {\n        this._playbackState = playbackState;\n    }\n    get playbackState() {\n        return this._playbackState;\n    }\n\n    /**\n     * @property {boolean} isPlayingAd\n     * @description Indicates whether an advertisement is currently playing.\n     */\n    set isPlayingAd(isPlayingAd) {\n        this._isPlayingAd = isPlayingAd;\n    }\n    get isPlayingAd() {\n        return this._isPlayingAd;\n    }\n\n    /**\n     * @property {number} currentPosition\n     * @description Current playback position in milliseconds.\n     * @description Sets to -1 if the position is Infinity.\n     */\n    set currentPosition(positionInMillisecs) {\n        if (positionInMillisecs === Infinity) {\n            positionInMillisecs = -1;\n        }\n        this._currentPosition = positionInMillisecs;\n    }\n    get currentPosition() {\n        return this._currentPosition;\n    }\n\n    /**\n     * @property {number} duration\n     * @description Total duration of the video in milliseconds.\n     * @description Sets to -1 if the duration is Infinity (e.g., for live streams).\n     */\n    set duration(durationInMillisecs) {\n        if (durationInMillisecs === Infinity) {\n            durationInMillisecs = -1;\n        }\n        this._duration = durationInMillisecs;\n    }\n    get duration() {\n        return this._duration;\n    }\n\n    /**\n     * @method toJSON\n     * @description Converts the VizbeeVideoStatus object to a plain JavaScript object.\n     * @returns {Object} A plain JavaScript object representing the video status.\n     */\n    toJSON() {\n        return {\n            guid: this.guid,\n            playbackState: this.playbackState,\n            isPlayingAd: this.isPlayingAd,\n            currentPosition: this.currentPosition,\n            duration: this.duration\n        };\n    }\n}",
+    "static": true,
+    "longname": "/Users/shiva/Documents/workspace/vizbee/react-native-vizbee-receiver-sdk/src/messages/VizbeeVideoStatus.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 105,
+    "kind": "class",
+    "name": "VizbeeVideoStatus",
+    "memberof": "src/messages/VizbeeVideoStatus.js",
+    "static": true,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "access": "public",
+    "export": true,
+    "importPath": "react-native-vizbee-receiver-sdk/src/messages/VizbeeVideoStatus.js",
+    "importStyle": "VizbeeVideoStatus",
+    "description": "",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "VizbeeVideoStatus"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Represents the current status of a video in the Vizbee SDK.\nThis class provides methods to set and get various properties related to the video's playback status."
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 106,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 14,
+    "unknown": [
+      {
+        "tagName": "@constructor",
+        "tagValue": ""
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Initializes a new instance of VizbeeVideoStatus with default values."
+      }
+    ]
+  },
+  {
+    "__docId__": 107,
+    "kind": "member",
+    "name": "_guid",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#_guid",
+    "access": "private",
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 108,
+    "kind": "member",
+    "name": "_playbackState",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#_playbackState",
+    "access": "private",
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 109,
+    "kind": "member",
+    "name": "_isPlayingAd",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#_isPlayingAd",
+    "access": "private",
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 110,
+    "kind": "member",
+    "name": "_currentPosition",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#_currentPosition",
+    "access": "private",
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 111,
+    "kind": "member",
+    "name": "_duration",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#_duration",
+    "access": "private",
+    "description": null,
+    "lineNumber": 21,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 112,
+    "kind": "set",
+    "name": "guid",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#guid",
+    "access": "public",
+    "description": "",
+    "lineNumber": 28,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Unique identifier for the video."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "guid",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 114,
+    "kind": "get",
+    "name": "guid",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#guid",
+    "access": "public",
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 115,
+    "kind": "set",
+    "name": "playbackState",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#playbackState",
+    "access": "public",
+    "description": "",
+    "see": [
+      "VizbeePlayerState for possible values."
+    ],
+    "lineNumber": 40,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Current state of the video playback (e.g., IDLE, PLAYING, PAUSED)."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "playbackState",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 117,
+    "kind": "get",
+    "name": "playbackState",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#playbackState",
+    "access": "public",
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 118,
+    "kind": "set",
+    "name": "isPlayingAd",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#isPlayingAd",
+    "access": "public",
+    "description": "",
+    "lineNumber": 51,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Indicates whether an advertisement is currently playing."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "isPlayingAd",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 120,
+    "kind": "get",
+    "name": "isPlayingAd",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#isPlayingAd",
+    "access": "public",
+    "description": null,
+    "lineNumber": 54,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 121,
+    "kind": "set",
+    "name": "currentPosition",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#currentPosition",
+    "access": "public",
+    "description": "",
+    "lineNumber": 63,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Current playback position in milliseconds."
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Sets to -1 if the position is Infinity."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "currentPosition",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 123,
+    "kind": "get",
+    "name": "currentPosition",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#currentPosition",
+    "access": "public",
+    "description": null,
+    "lineNumber": 69,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 124,
+    "kind": "set",
+    "name": "duration",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#duration",
+    "access": "public",
+    "description": "",
+    "lineNumber": 78,
+    "unknown": [
+      {
+        "tagName": "@description",
+        "tagValue": "Total duration of the video in milliseconds."
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Sets to -1 if the duration is Infinity (e.g., for live streams)."
+      }
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "duration",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 126,
+    "kind": "get",
+    "name": "duration",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#duration",
+    "access": "public",
+    "description": null,
+    "lineNumber": 84,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 127,
+    "kind": "method",
+    "name": "toJSON",
+    "memberof": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/messages/VizbeeVideoStatus.js~VizbeeVideoStatus#toJSON",
+    "access": "public",
+    "description": "",
+    "lineNumber": 93,
+    "unknown": [
+      {
+        "tagName": "@method",
+        "tagValue": "toJSON"
+      },
+      {
+        "tagName": "@description",
+        "tagValue": "Converts the VizbeeVideoStatus object to a plain JavaScript object."
+      },
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object} A plain JavaScript object representing the video status."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "A plain JavaScript object representing the video status."
+    },
+    "params": []
+  },
+  {
+    "kind": "index",
+    "content": "\n# react-native-vizbee-receiver-sdk\n<img src=\"https://static.claspws.tv/images/common/logos/vizbee_logo_tagline.png\" alt=\"vizbee\" width=\"400\"/>\n\n## Overview\n\nVizbee enables streaming apps to deliver great cross-device experiences. This repository provides the React Native SDK for enabling Vizbee's cross-device experiences. You need a [Vizbee account](https://console.vizbee.tv) in order to use this SDK.\n\n## Build setup\n\nSee build setup instructions for RN Vizbee Receiver SDK.\n\n## Developer guide\n\nOnce you are setup, you can get further instructions for integrating this React Native Receiver Sender from the [Vizbee console](https://console.vizbee.tv)\n  \n",
+    "longname": "/Users/shiva/Documents/workspace/vizbee/react-native-vizbee-receiver-sdk/README.md",
+    "name": "./README.md",
+    "static": true,
+    "access": "public"
+  }
+]

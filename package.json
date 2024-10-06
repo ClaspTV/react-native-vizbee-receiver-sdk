@@ -4,7 +4,8 @@
   "description": "React Native SDK for Vizbee Receiver",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "jsdoc -d docs/api --configure jsdoc-conf.json"
   },
   "peerDependencies": {
     "react-native": "^0.41.2"
@@ -21,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/ClaspTV/react-native-vizbee-receiver-sdk/issues"
   },
-  "homepage": "https://github.com/ClaspTV/react-native-vizbee-receiver-sdk#readme"
+  "homepage": "https://github.com/ClaspTV/react-native-vizbee-receiver-sdk#readme",
+  "devDependencies": {
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "esdoc-publish-html-plugin": "^1.1.2",
+    "esdoc-react-plugin": "^1.0.1"
+}
 }
