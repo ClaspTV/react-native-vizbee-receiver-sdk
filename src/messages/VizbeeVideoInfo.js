@@ -1,5 +1,14 @@
+/**
+ * @class VizbeeVideoInfo
+ * @description Represents detailed information about a video in the Vizbee SDK.
+ * This class provides methods to set and get various properties of a video.
+ */
 export default class VizbeeVideoInfo {
 
+    /**
+     * @constructor
+     * @description Initializes a new instance of VizbeeVideoInfo with default values.
+     */
     constructor() {
 
         this._guid = "";
@@ -19,6 +28,11 @@ export default class VizbeeVideoInfo {
         this._customMetadata = undefined;
     }
 
+    /**
+     * @method toRNVideoInfo
+     * @description Converts the VizbeeVideoInfo object to a plain JavaScript object for React Native.
+     * @returns {Object} A plain JavaScript object representing the video information.
+     */
     toRNVideoInfo() {
 
         let rnVideoInfo = {};
@@ -41,6 +55,11 @@ export default class VizbeeVideoInfo {
         return rnVideoInfo;
     }
 
+    /**
+     * @method fromRNVideoInfo
+     * @description Populates the VizbeeVideoInfo object from a plain JavaScript object.
+     * @param {Object} rnVideoInfo - A plain JavaScript object containing video information.
+     */
     fromRNVideoInfo(rnVideoInfo) {
 
         if (!rnVideoInfo) {
@@ -64,6 +83,10 @@ export default class VizbeeVideoInfo {
         this._customMetadata = rnVideoInfo.customMetadata;
     }
 
+    /**
+     * @property {boolean} isLive
+     * @description Indicates whether the video is a live stream.
+     */
     set isLive(isLive) {
         this._isLive = isLive;
     }
@@ -71,6 +94,10 @@ export default class VizbeeVideoInfo {
         return this._isLive;
     }
 
+    /**
+     * @property {string} guid
+     * @description Unique identifier for the video.
+     */
     set guid(guid) {
         this._guid = guid;
     }
@@ -78,6 +105,10 @@ export default class VizbeeVideoInfo {
         return this._guid;
     }
 
+    /**
+     * @property {string} videoURL
+     * @description URL of the video content.
+     */
     set videoURL(videoURL) {
         this._videoURL = videoURL;
     }
@@ -85,6 +116,10 @@ export default class VizbeeVideoInfo {
         return this._videoURL;
     }
 
+    /**
+     * @property {string} imageURL
+     * @description URL of the video thumbnail or poster image.
+     */
     set imageURL(imageURL) {
         this._imageURL = imageURL;
     }
@@ -92,6 +127,10 @@ export default class VizbeeVideoInfo {
         return this._imageURL;
     }
 
+    /**
+     * @property {string} title
+     * @description Title of the video.
+     */
     set title(title) {
         this._title = title;
     }
@@ -99,6 +138,10 @@ export default class VizbeeVideoInfo {
         return this._title;
     }
 
+    /**
+     * @property {string} subtitle
+     * @description Subtitle or secondary title of the video.
+     */
     set subtitle(subtitle) {
         this._subtitle = subtitle;
     }
@@ -106,6 +149,10 @@ export default class VizbeeVideoInfo {
         return this._subtitle;
     }
 
+    /**
+     * @property {string} description
+     * @description Detailed description of the video.
+     */
     set description(description) {
         this._description = description;
     }
@@ -113,6 +160,10 @@ export default class VizbeeVideoInfo {
         return this._description;
     }
 
+    /**
+     * @property {number} startPosition
+     * @description Starting position of the video in seconds.
+     */
     set startPosition(startPosition) {
         this._startPosition = startPosition;
     }
@@ -120,6 +171,10 @@ export default class VizbeeVideoInfo {
         return this._startPosition;
     }
 
+    /**
+     * @property {Array} tracks
+     * @description Array of track information (e.g., subtitles, audio tracks).
+     */
     set tracks(tracks) {
         this._tracks = tracks;
     }
@@ -127,7 +182,10 @@ export default class VizbeeVideoInfo {
         return this._tracks;
     }
 
-    // custom data
+    /**
+     * @property {Object} customStreamInfo
+     * @description Custom streaming information for the video.
+     */
     set customStreamInfo(customStreamInfo) {
         this._customStreamInfo = customStreamInfo;
     }
@@ -135,6 +193,10 @@ export default class VizbeeVideoInfo {
         return this._customStreamInfo;
     }
 
+    /**
+     * @property {Object} customMetadata
+     * @description Custom metadata associated with the video.
+     */
     set customMetadata(customMetadata) {
         this._customMetadata = customMetadata;
     }
