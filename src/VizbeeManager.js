@@ -1,6 +1,7 @@
 import { NativeModules } from "react-native";
 import AppAdapter from "./delegates/app/AppAdapter";
 import PlayerAdapter from "./delegates/player/PlayerAdapter";
+import VizbeeOptions from "./VizbeeOptions";
 
 const VizbeeNativeManager = NativeModules.VizbeeNativeManager || {};
 
@@ -55,12 +56,13 @@ class VizbeeManager {
 
     /**
      * @method init
-     * @description Initializes the Vizbee SDK with the provided app ID and delegate.
+     * @description Initializes the Vizbee SDK with the provided app ID, delegate, and optional options.
      * This method should be called once when the app starts.
      * @param {string} appId - The unique identifier for the application.
      * @param {Object} appDelegate - The app delegate object implementing required methods.
+     * @param {VizbeeOptions|Object} [options=null] - Optional configuration options for the SDK.
      */
-    init(appId, appDelegate) {
+    init(appId, appDelegate, options = null) {
         if (this.isSDKInitialized) {
             return;
         }
@@ -68,8 +70,13 @@ class VizbeeManager {
         // Set app delegate
         this.setAppDelegate(appDelegate);
 
-        // Initialize the SDK
-        VizbeeNativeManager.init(appId);
+        // Handle options
+        if (options && options instanceof VizbeeOptions) {
+            VizbeeNativeManager.init(appId, options.toRNOptions());
+        } else {
+            // No options
+            VizbeeNativeManager.init(appId, null);
+        }
 
         // TODO: Set based on event from native side
         this.isSDKInitialized = true;

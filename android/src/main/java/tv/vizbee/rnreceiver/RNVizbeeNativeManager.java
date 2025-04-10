@@ -51,13 +51,22 @@ public class RNVizbeeNativeManager extends ReactContextBaseJavaModule implements
     // Init
     //---
 
+    /**
+     * Initializes the Vizbee SDK with the provided app ID and optional options.
+     * @param appId The Vizbee App ID
+     * @param optionsMap Optional options map (can be null)
+     */
     @ReactMethod
-    public void init(String appId) {
-
-        // TODO: initialize without `application` instance after FireTV SDK API has been updated
-        Logger.i(LOG_TAG, "Initializing Vizbee SDK with appId " + appId);
+    public void init(String appId, ReadableMap optionsMap) {
+        
         RNVizbeeAppAdapter appAdapter = new RNVizbeeAppAdapter(reactApplicationContext);
-        VizbeeOptions options = new VizbeeOptions.Builder().build();
+        
+        // Convert options map to VizbeeOptions using the converter or use default if null
+        VizbeeOptions options = optionsMap != null ? 
+            RNVizbeeOptionsConverter.getVizbeeOptions(optionsMap) : 
+            new VizbeeOptions.Builder().build();
+            
+        Logger.i(LOG_TAG, "Initializing Vizbee SDK with appId " + appId + " and options " + options);
         Vizbee.getInstance().initialize(appId, appAdapter, options);
     }
 
