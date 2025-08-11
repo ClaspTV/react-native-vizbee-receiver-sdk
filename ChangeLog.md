@@ -22,4 +22,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Updated
     Updated range  for react-native from '^0.41.2' ->   '>=0.60.0 <=0.80.1'
 ### Fixed
-    Issue video status to fails when track info is null. 
+    Issue video status fails with exception when track info is null.
