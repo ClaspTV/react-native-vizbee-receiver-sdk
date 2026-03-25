@@ -175,7 +175,9 @@ public class RNVizbeeAppAdapter extends VizbeeAppAdapter {
         trackInfoMap.putString("languageCode", trackInfo.getLanguage());
         trackInfoMap.putInt("type", trackInfo.getType());
         trackInfoMap.putInt("subtype", trackInfo.getSubtype());
-        trackInfoMap.putMap("customData", convertJsonToMap(trackInfo.getCustomData()));
+        if (trackInfo.getCustomData() != null) {
+            trackInfoMap.putMap("customData", convertJsonToMap(trackInfo.getCustomData()));
+        }
         return trackInfoMap;
     }
 }
