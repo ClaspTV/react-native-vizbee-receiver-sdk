@@ -30,7 +30,7 @@ dependencies {
     
     implementation 'com.facebook.react:react-native:+'
 
-    compileOnly 'tv.vizbee:firetv-receiver-sdk:+'
+    compileOnly 'tv.vizbee:firetv-receiver-sdk:4.2.8'
 
-    compileOnly 'tv.vizbee:androidtv-receiver-sdk:+'
+    compileOnly 'tv.vizbee:androidtv-receiver-sdk:4.2.5'
 }
