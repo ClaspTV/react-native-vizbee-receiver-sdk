@@ -1,13 +1,13 @@
 {
   "name": "react-native-vizbee-receiver-sdk",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "React Native SDK for Vizbee Receiver",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "react-native": ">=0.60.0 <=0.80.1"
+    "react-native": ">=0.60.0 <=0.84.0"
   },
   "repository": {
     "type": "git",
