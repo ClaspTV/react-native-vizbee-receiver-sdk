@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.0.27] - 2026-10-14
 ### Updated
-    Updated range for react-native from '>=0.60.0 <=0.80.1' -> '>=0.60.0 <=0.84.0'
+    Updated range for react-native from '>=0.60.0 <=0.80.1' -> '>=0.60.0 <=0.87.1'
+    Raised compileSdk from 32 to 34, required by React Native 0.87.1 and current AndroidX dependencies.
     Pinned the Android native receiver SDKs: firetv-receiver-sdk 4.2.8 and androidtv-receiver-sdk 4.2.5.
 ### Removed
     Removed the legacy buildscript block from android/build.gradle that referenced the shut-down JCenter repository.
